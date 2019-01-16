@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>基础语法</title>
+    <script src="js/vue-2.5.17.js"></script>
+</head>
+<body>
+<div id="app">
+    {{message}}
+    {{new Date().getTime()}}
+    <span :title="title">我有一个标题</span>
+    <img :src="src" :alt="alt">
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function(event) {
+        console.log('DOMContentLoaded:'+new Date().getTime())
+    })
+    let app = new Vue({
+        el:'#app',
+        data:{
+            message:'hello vue!',
+            title:'这里是标题title',
+            src:'https://tva4.sinaimg.cn/crop.0.0.180.180.180/673b3bccjw1e8qgp5bmzyj2050050aa8.jpg',
+            alt:'这里将出现图片'
+        }
+    })
+    //
+</script>
+</body>
+</html>
