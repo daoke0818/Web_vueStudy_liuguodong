@@ -7,25 +7,127 @@
 </head>
 <body>
 <div id="app">
+    <h2>声明式渲染</h2>
     {{message}}
-    {{new Date().getTime()}}
-    <span :title="title">我有一个标题</span>
+    {{new Date().getTime()}}<br>
+    <span :title="title">移到我上面查看标题</span><br>
     <img :src="src" :alt="alt">
 </div>
+<ul>
+    <li>采用Mustache的渲染方法：{{ }}
+    <li>vue渲染的时机要比DOMContentLoaded早几毫秒。</li>
+</ul>
+<hr>
+<div id="app2">
+    <h2>条件渲染</h2>
+    <div v-if="number===1">
+        number是1
+    </div>
+    <div v-if="number===2">
+        number是2
+    </div>
+    <div v-show="isShow">
+        显示了
+    </div>
+</div>
+<ul>
+    <li>v-if在条件不满足时不渲染
+    <li>v-show在条件不满足时通过css将元素隐藏
+</ul>
+<hr>
+<div id="app3">
+    <h2>列表渲染(数组)</h2>
+    <ul>
+        <li v-for="(item,index) in items" v-show="item.price>10" v-bind:key="index">{{index+': '+ item.name+','+item.price}}
+
+        </li>
+    </ul>
+</div>
+<ul>
+    <li>这里的index作为每条数据的id,在列表更新是，可通过key决定DOM的复用策略</li>
+    <li>在控制台可以通过<code>app3.items.push({name:'music',price:12})</code>来添加数据，实时显示</li>
+</ul>
+<hr>
+<div id="app4">
+    <h2>列表渲染(对象)</h2>
+    <ul>
+        <li v-for="(value,key,index) in obj">{{`${index}- ${key}:${value}`}}</li>
+    </ul>
+</div>
+<ul>
+    <li>便利对象时有三个参数，分别是值、键和下标</li>
+    <li>遍历的对象不能在控制台中通过<code>app4.obj.other='another'</code>来增加属性，而要通过<code>Vue.set(app4.obj,'newKey','newValue')</code>来实现。因为Vue对有的属性变化检测不到
+    </li>
+    <li>Vue能检测到的变化：
+        <ul>
+            <li>现有数据字段的变化：<code>item[0].isShow = true</code>;
+            <li>通过<code>Vue.set(object, key, value)</code>的⽅式添加的属性
+            <li>通过<code>Vue.delete(object, Key)</code>的⽅式删除的属性
+            <li><code>push()</code>
+            <li><code>pop()</code>
+            <li><code>shift()</code>
+            <li><code>unshift()</code>
+            <li><code>splice()</code>
+            <li><code>sort()</code>
+            <li><code>reverse()</code>
+            <li><code>filter()</code>
+            <li><code>concat()</code>
+            <li><code>slice()</code>
+        </ul>
+    </li>
+    <li>Vue检测不到的变化：
+        <ul>
+            <li>利⽤索引去设置新的数据时：<code>items[indexOfItem] = newItem;</code>
+            <li>直接修改数组的⻓度时：<code>items.length = newLength;</code>
+            <li>直接去添加或删除对象的属性：<code>app.dataSource.newKey = 'newKey';</code>
+        </ul>
+    </li>
+</ul>
 <script>
-    document.addEventListener('DOMContentLoaded', function(event) {
-        console.log('DOMContentLoaded:'+new Date().getTime())
-    })
+    document.addEventListener('DOMContentLoaded', function (event) {
+        console.log('DOMContentLoaded:' + new Date().getTime())
+    });
     let app = new Vue({
-        el:'#app',
-        data:{
-            message:'hello vue!',
-            title:'这里是标题title',
-            src:'https://tva4.sinaimg.cn/crop.0.0.180.180.180/673b3bccjw1e8qgp5bmzyj2050050aa8.jpg',
-            alt:'这里将出现图片'
+        el: '#app',
+        data: {
+            message: 'hello vue!',
+            title: '这里是标题title',
+            src: 'https://tva4.sinaimg.cn/crop.0.0.180.180.180/673b3bccjw1e8qgp5bmzyj2050050aa8.jpg',
+            alt: '这里将出现图片'
+        }
+    });
+    let app2 = new Vue({
+        el: '#app2',
+        data: {
+            number: 1,
+            isShow: false
+        }
+    });
+    let app3 = new Vue({
+        el: '#app3',
+        data: {
+            items: [
+                {name: 'life', price: 800},
+                {name: 'game', price: 6},
+                {name: 'eat', price: 18},
+            ]
+        },
+        /*method:{
+            function(){
+                this.items.push({name:'drink',price:20})
+            }
+        }*/
+    });
+    let app4 = new Vue({
+        el: '#app4',
+        data: {
+            obj: {
+                name: 'dream',
+                price: '65536',
+                time: 'all the time'
+            }
         }
     })
-    //
 </script>
 </body>
 </html>
