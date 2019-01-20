@@ -3,86 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <title>基础语法</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
     <script src="js/vue-2.5.17.js"></script>
+    <style>
+        body>.container>section{
+            border-bottom: 1px solid lightgray;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
 </head>
 <body>
-<div id="app">
-    <h2>声明式渲染</h2>
-    {{message}}
-    {{new Date().getTime()}}<br>
-    <span :title="title">移到我上面查看标题</span><br>
-    <img :src="src" :alt="alt">
-</div>
-<ul>
-    <li>采用Mustache的渲染方法：{{ }}
-    <li>vue渲染的时机要比DOMContentLoaded早几毫秒。</li>
-</ul>
-<hr>
-<div id="app2">
-    <h2>条件渲染</h2>
-    <div v-if="number===1">
-        number是1
-    </div>
-    <div v-if="number===2">
-        number是2
-    </div>
-    <div v-show="isShow">
-        显示了
-    </div>
-</div>
-<ul>
-    <li>v-if在条件不满足时不渲染
-    <li>v-show在条件不满足时通过css将元素隐藏
-</ul>
-<hr>
-<div id="app3">
-    <h2>列表渲染(数组)</h2>
-    <ul>
-        <li v-for="(item,index) in items" v-show="item.price>10" v-bind:key="index">{{index+': '+ item.name+','+item.price}}
+<div class="container">
+    <section>
+        <div id="app">
+            <h2>声明式渲染</h2>
+            {{message}}
+            {{new Date().getTime()}}<br>
+            <span :title="title">移到我上面查看标题</span><br>
+            <img :src="src" :alt="alt">
+        </div>
+        <ul>
+            <li>采用Mustache的渲染方法：{{ }}
+            <li>vue渲染的时机要比DOMContentLoaded早几毫秒。</li>
+        </ul>
+    </section>
+    <section>
+        <div id="app2">
+            <h2>条件渲染</h2>
+            <div v-if="number===1">
+                number是1
+            </div>
+            <div v-if="number===2">
+                number是2
+            </div>
+            <div v-show="isShow">
+                显示了
+            </div>
+        </div>
+        <ul>
+            <li>v-if在条件不满足时不渲染
+            <li>v-show在条件不满足时通过css将元素隐藏
+        </ul>
+    </section>
+    <section>
+        <div id="app3">
+            <h2>列表渲染(数组)</h2>
+            <ul>
+                <li v-for="(item,index) in items" v-show="item.price>10" v-bind:key="index">{{index+': '+
+                    item.name+','+item.price}}
 
-        </li>
-    </ul>
-</div>
-<ul>
-    <li>这里的index作为每条数据的id,在列表更新是，可通过key决定DOM的复用策略</li>
-    <li>在控制台可以通过<code>app3.items.push({name:'music',price:12})</code>来添加数据，实时显示</li>
-</ul>
-<hr>
-<div id="app4">
-    <h2>列表渲染(对象)</h2>
-    <ul>
-        <li v-for="(value,key,index) in obj">{{`${index}- ${key}:${value}`}}</li>
-    </ul>
-</div>
-<ul>
-    <li>便利对象时有三个参数，分别是值、键和下标</li>
-    <li>遍历的对象不能在控制台中通过<code>app4.obj.other='another'</code>来增加属性，而要通过<code>Vue.set(app4.obj,'newKey','newValue')</code>来实现。因为Vue对有的属性变化检测不到
-    </li>
-    <li>Vue能检测到的变化：
+                </li>
+            </ul>
+        </div>
         <ul>
-            <li>现有数据字段的变化：<code>item[0].isShow = true</code>;
-            <li>通过<code>Vue.set(object, key, value)</code>的⽅式添加的属性
-            <li>通过<code>Vue.delete(object, Key)</code>的⽅式删除的属性
-            <li><code>push()</code>
-            <li><code>pop()</code>
-            <li><code>shift()</code>
-            <li><code>unshift()</code>
-            <li><code>splice()</code>
-            <li><code>sort()</code>
-            <li><code>reverse()</code>
-            <li><code>filter()</code>
-            <li><code>concat()</code>
-            <li><code>slice()</code>
+            <li>这里的index作为每条数据的id,在列表更新是，可通过key决定DOM的复用策略</li>
+            <li>在控制台可以通过<code>app3.items.push({name:'music',price:12})</code>来添加数据，实时显示</li>
         </ul>
-    </li>
-    <li>Vue检测不到的变化：
+    </section>
+    <section>
+        <div id="app4">
+            <h2>列表渲染(对象)</h2>
+            <ul>
+                <li v-for="(value,key,index) in obj">{{`${index}- ${key}:${value}`}}</li>
+            </ul>
+        </div>
         <ul>
-            <li>利⽤索引去设置新的数据时：<code>items[indexOfItem] = newItem;</code>
-            <li>直接修改数组的⻓度时：<code>items.length = newLength;</code>
-            <li>直接去添加或删除对象的属性：<code>app.dataSource.newKey = 'newKey';</code>
+            <li>遍历对象时有三个参数，分别是值、键和下标</li>
+            <li>
+                遍历的对象不能在控制台中通过<code>app4.obj.other='another'</code>来增加属性，而要通过<code>Vue.set(app4.obj,'newKey','newValue')</code>来实现。因为Vue对有的属性变化检测不到
+            </li>
+            <li>Vue能检测到的变化：
+                <ul>
+                    <li>现有数据字段的变化：<code>item[0].isShow = true</code>;
+                    <li>通过<code>Vue.set(object, key, value)</code>的⽅式添加的属性
+                    <li>通过<code>Vue.delete(object, Key)</code>的⽅式删除的属性
+                    <li><code>push()</code>
+                    <li><code>pop()</code>
+                    <li><code>shift()</code>
+                    <li><code>unshift()</code>
+                    <li><code>splice()</code>
+                    <li><code>sort()</code>
+                    <li><code>reverse()</code>
+                    <li><code>filter()</code>
+                    <li><code>concat()</code>
+                    <li><code>slice()</code>
+                </ul>
+            </li>
+            <li>Vue检测不到的变化：
+                <ul>
+                    <li>利⽤索引去设置新的数据时：<code>items[indexOfItem] = newItem;</code>
+                    <li>直接修改数组的⻓度时：<code>items.length = newLength;</code>
+                    <li>直接去添加或删除对象的属性：<code>app.dataSource.newKey = 'newValue';</code>
+                </ul>
+            </li>
         </ul>
-    </li>
-</ul>
+    </section>
+    <section>
+        <div id="app5">
+            <p :title="testTitle1Key+'-'+testTitle2Key">测试拼接字符串:{{testTitle1Key+'-'+testTitle2Key}}</p>
+            <p :title="testTitle4Key-testTitle3Key">测试算术运算:{{testTitle4Key-testTitle3Key}}</p>
+            <p :title="testObj">测试对象(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testObj}}</p>
+            <p :title="testObj2">测试的象重写toString(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testObj2}}</p>
+            <p :title="testArr">测试数组:{{testArr}}</p>
+            <p :title="testArr2">(<strong class="text-danger">这里不知如何重写</strong>)测试数组重写toString:{{testArr2}}</p>
+            <p :title="testMethod()">测试方法:{{testMethod()}}</p>
+        </div>
+        <ul>
+            <li>v-bind支持JavaScript单一表达式，可以绑定数组、对象和函数。其中前两者调用其头String方法，而函数输出其返回值。</li>
+        </ul>
+    </section>
+</div>
 <script>
     document.addEventListener('DOMContentLoaded', function (event) {
         console.log('DOMContentLoaded:' + new Date().getTime())
@@ -92,7 +123,7 @@
         data: {
             message: 'hello vue!',
             title: '这里是标题title',
-            src: 'https://tva4.sinaimg.cn/crop.0.0.180.180.180/673b3bccjw1e8qgp5bmzyj2050050aa8.jpg',
+            src: 'http://p2.music.126.net/dB_Y98VU6CFtXQ_-Bi88pQ==/18680702557664610.jpg?param=150y150',
             alt: '这里将出现图片'
         }
     });
@@ -127,7 +158,38 @@
                 time: 'all the time'
             }
         }
-    })
+    });
+    let app5 = new Vue({
+        el:'#app5',
+        data:{
+            testTitle1Key:'testTitle1Key',
+            testTitle2Key:'testTitle2Key',
+            testTitle3Key:33,
+            testTitle4Key:44,
+            testObj:{name:'objName'},
+            testObj2:{
+                name:'objName',
+                toString:function () {
+                    return 'testObj重写toString'
+                }
+            },
+            testArr:[1,1,2,3,5,8],
+            testArr2:[1,1,2,3,5,8],
+            testMethod:function(){
+                let sum = 1+2;
+                return '1+2='+sum;
+            }
+        },
+        method:{
+         x:()=>{
+                this.testArr2.toString=function () {
+                    alert(1);
+                    return '数组重写toString'
+                }
+            }
+        }
+    });
+
 </script>
 </body>
 </html>
