@@ -142,6 +142,22 @@
             <div :style="testDisplay">请查看我的style属性——vue只渲染最后一个被浏览器支持的值</div>
         </div>
     </section>
+    <section>
+        <h2>v-model绑定</h2>
+        <div id="app7">
+            <input type="checkbox" id="checkbox1" value="天" v-model="testCheckbox">
+            <label class="mr-3" for="checkbox1">天</label>
+            <input type="checkbox" id="checkbox2" value="地" v-model="testCheckbox">
+            <label class="mr-3" for="checkbox2">地</label>
+            <input type="checkbox" id="checkbox3" value="人" v-model="testCheckbox">
+            <label class="mr-3" for="checkbox3">人</label>
+            <p>{{testCheckbox}}</p>
+        </div>
+        <ul>多选框绑定
+            <li>如果v-model的值为<strong>数组</strong>，则依次绑定对应checkbox的value值，没有value的值为null且会同时动作；选中CheckBox后则自动添加对应value值到数组中。</li>
+            <li>如果v-model的值为<strong>字符串</strong>，则会绑定checked的值，这时有一个发生变化，所有的CheckBox都会同时动作，即是全选按钮效果。</li>
+        </ul>
+    </section>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function (event) {
@@ -232,6 +248,12 @@
                 display:['-webkit-box','-ms-flexbox','flex']
             }
 
+        }
+    });
+    let app7 = new Vue({
+        el:'#app7',
+        data:{
+            testCheckbox:[]
         }
     })
 </script>
