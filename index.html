@@ -10,6 +10,18 @@
             border-bottom: 1px solid lightgray;
             margin-bottom: 1.5rem;
         }
+        .red{
+            color: red;
+        }
+        .green{
+            color: #0f0;
+        }
+        .blue{
+            color: #00f;
+        }
+        .underLine{
+            text-decoration: underline;
+        }
     </style>
 
 </head>
@@ -110,8 +122,17 @@
             <p :title="testMethod()">测试方法:{{testMethod()}}</p>
         </div>
         <ul>
-            <li>v-bind支持JavaScript单一表达式，可以绑定数组、对象和函数。其中前两者调用其头String方法，而函数输出其返回值。</li>
+            <li>v-bind支持JavaScript单一表达式，可以绑定数组、对象和函数。其中前两者调用其toString方法，而函数输出其返回值。</li>
         </ul>
+    </section>
+    <section>
+        <div id="app6">
+            <div :class="{'red':isRed,'underLine':true}">看看我是不是带着下划线变红了</div>
+            <div :class="testClassObj">我是被<strong>对象</strong>设置的变绿色了</div>
+            <div :class="testClassArr">我是被<strong>数组</strong>设置的蓝色加下划线</div>
+            <div :class="[isRed?'red':'green']">我是被<strong>三目运算符</strong>设置的颜色,class中的中括号可以不要</div>
+            <div :class="[{'underLine':true},testClassObj]">我是被<strong>数组中嵌套的对象</strong>设置的颜色</div>
+        </div>
     </section>
 </div>
 <script>
@@ -189,7 +210,16 @@
             }
         }
     });
-
+    let app6 = new Vue({
+        el:'#app6',
+        data:{
+            isRed:true,
+            testClassObj:{
+                'green':true
+            },
+            testClassArr:['blue','underLine']
+        }
+    })
 </script>
 </body>
 </html>
