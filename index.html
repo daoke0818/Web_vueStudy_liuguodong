@@ -6,9 +6,24 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <script src="js/vue-2.5.17.js"></script>
     <style>
+        body{
+            margin-bottom: 3rem;
+        }
         body>.container>section{
             border-bottom: 1px solid lightgray;
             margin-bottom: 1.5rem;
+        }
+        .red{
+            color: red;
+        }
+        .green{
+            color: #0f0;
+        }
+        .blue{
+            color: #00f;
+        }
+        .underLine{
+            text-decoration: underline;
         }
     </style>
 
@@ -101,6 +116,7 @@
     </section>
     <section>
         <div id="app5">
+            <h2>属性绑定</h2>
             <p :title="testTitle1Key+'-'+testTitle2Key">测试拼接字符串:{{testTitle1Key+'-'+testTitle2Key}}</p>
             <p :title="testTitle4Key-testTitle3Key">测试算术运算:{{testTitle4Key-testTitle3Key}}</p>
             <p :title="testObj">测试对象(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testObj}}</p>
@@ -110,8 +126,21 @@
             <p :title="testMethod()">测试方法:{{testMethod()}}</p>
         </div>
         <ul>
-            <li>v-bind支持JavaScript单一表达式，可以绑定数组、对象和函数。其中前两者调用其头String方法，而函数输出其返回值。</li>
+            <li>v-bind支持JavaScript单一表达式，可以绑定数组、对象和函数。其中前两者调用其toString方法，而函数输出其返回值。</li>
         </ul>
+    </section>
+    <section>
+        <div id="app6">
+            <h2>class/样式绑定</h2>
+            <div :class="{'text-danger':isRed,'underLine':true}">看看我是不是带着下划线变红了</div>
+            <div :class="testClassObj">我是被<strong>对象</strong>设置的变绿色了</div>
+            <div :class="testClassArr">我是被<strong>数组</strong>设置的蓝色加下划线</div>
+            <div :class="[isRed?'text-danger':'text-success']">我是被<strong>三目运算符</strong>设置的颜色,class中的中括号可以不要</div>
+            <div :class="[{'underLine':true},testClassObj]">我是被<strong>数组中嵌套的对象</strong>设置的颜色</div>
+            <div style="font-size:1.25rem;" :style="isBlue ? 'color:#007bff' : 'color:red'">我是<strong>直接被style三目运算符表达式</strong>设置的颜色</div>
+            <div :style="{color:'#dc3545','font-weight':'bold',fontSize:testFontSize+'px'}">支持对象写法设置的颜色,属性名如果不带引号则需要用驼峰写法，带引号按需使用连字符。属性值可以拼接</div>
+            <div :style="testDisplay">请查看我的style属性——vue只渲染最后一个被浏览器支持的值</div>
+        </div>
     </section>
 </div>
 <script>
@@ -189,7 +218,22 @@
             }
         }
     });
+    let app6 = new Vue({
+        el:'#app6',
+        data:{
+            isRed:true,
+            isBlue:true,
+            testClassObj:{
+                'text-success':true
+            },
+            testClassArr:['text-primary','underLine'],
+            testFontSize:24,
+            testDisplay:{
+                display:['-webkit-box','-ms-flexbox','flex']
+            }
 
+        }
+    })
 </script>
 </body>
 </html>
