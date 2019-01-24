@@ -119,7 +119,10 @@ let app8 = new Vue({
         },
         onChange:function () {
             console.log(this.inputMsg)
-        }
+        },
+		onScroll:function(){
+			alert('滚动条触发的自定义方法')
+		}
     }
 });
 

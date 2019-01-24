@@ -198,17 +198,57 @@
             <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
             <p>方法传参</p>
             <input v-model="inputMsg" @keyup="onChange">
+			<p>绑keyup事件 inputMsg：{{inputMsg}}</p>
             <ul>
                 <li>如果使用原生的onclick则无法获取到vue定义的counter变量</li>
                 <li>直接调用vue中定义的方法，会默认传入当前的DOM原生事件</li>
             </ul>
             <h3>事件修饰符</h3>
-            <div class="p-3 border" @click="testOnclickMethods">
+            <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
+                <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
+            </div>
+            <p>没有添加修饰符的情况</p>
+            <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
                 <button @click.stop="onSumClick(11,22)">onSumClick(11,22)</button>
             </div>
-            <p>.stop——阻止事件冒泡</p>
+            <p><code>.stop</code>——阻止事件冒泡</p>
             <a href="http://e-art.top" @click.prevent="onSumClick(11,22)" target="_blank">http://e-art.top</a>
-            <p>.prevent——阻止默认事件（光弹出不跳转）</p>
+            <p><code>.prevent</code>——阻止默认事件（光弹出不跳转）</p>
+            <div class="p-3 border" @click.capture="testOnclickMethods">testOnclickMethods
+                <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
+            </div>
+            <p><code>.capture</code>——事件改为捕获模式（默认为冒泡）</p>
+            <div class="p-3 border" @click.self="testOnclickMethods">testOnclickMethods
+                <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
+            </div>
+            <p><code>.self</code>——只处理元素本身的事件，而不处理冒泡或捕获来的</p>
+            <div class="p-3 border" @click.once="testOnclickMethods">testOnclickMethods
+                <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
+            </div>
+            <p><code>.once</code>——事件触发一次后就被删除（包括被冒泡）</p>
+            <div id="#testScroll" @scroll.passive="onScroll" style='height:5rem;overflow: scroll;' class="p-3 border">
+				<div class='border' style="height:8rem;">滚动我试试？<div class='text-danger'>感受不够深刻</div></div>
+            </div>
+            <p><code>.passive</code>——恢复浏览器事件默认行为（如立即触发滚动，因为scroll事件中默认浏览器先处理事件再滚动），不能和prevent一起用，因为后者会被忽略。</p>
+            <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
+                <a href="http://e-art.top" @click.prevent.self="onSumClick(11,22)" target="_blank">http://e-art.top
+                    <button @click="onSumClick(1, 2)">onSumClick</button>
+                </a>
+            </div>
+            <p><code>.prevent.self</code>——阻止了a的所有事件</p>
+            <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
+                <a href="http://e-art.top" @click.self.prevent="onSumClick(11,22)" target="_blank">http://e-art.top
+                    <button @click="onSumClick(1, 2)">onSumClick</button>
+                </a>
+            </div>
+            <p><code>.self.prevent</code>——只阻止了a的点击事件，而通过捕获或冒泡来的事件会触发默认动作</p>
+            <ul>
+                <li class="text-danger">可以这样理解，对于a标签，事件触发有3种行为：浏览器默认+自身触发+捕获或冒泡触发；<br>
+                    .prevent.self在前相当于先阻止默认行为，再过滤掉捕获冒泡行为；<br>
+                    .self.prevent相当于先过滤出来自身的行为，再进行阻止默认行为，而对捕获冒泡来触发的默认事件没有阻止。
+                </li>
+            </ul>
+
         </div>
     </section>
 </div>
