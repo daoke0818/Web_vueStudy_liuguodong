@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第二篇 动态数据的计算</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        body{
+            margin-bottom: 3rem;
+        }
+        body>.container>section{
+            border-bottom: 1px solid lightgray;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+<h1>第二篇 动态数据的计算</h1>
+<p>运行环境：vue-2.5.17.js，Chrome71</p>
+    <section id="app">
+        <h2>表达式直接计算</h2>
+        <p>原字符串：{{message}}</p>
+        <p>反转后的字符串：{{message.split('').reverse().join('')}}</p>
+    </section>
+    <section id="app2">
+        <h2>method方法</h2>
+        <ul>
+            <li v-for="(book,index) in books">
+                <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
+                <button class="mr-2" @click="book.number++">+</button>
+                <button @click="book.number--">-</button>
+            </li>
+        </ul>
+        <p>总价：{{totalPrice()}}</p>
+    </section>
+</div>
+<script src="js/vue-2.5.17.js"></script>
+<script src='js/02_dataCalculation.js'></script>
+   
+</body>
+</html>
