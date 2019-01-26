@@ -34,6 +34,25 @@
             </li>
         </ul>
         <p>总价：{{totalPrice()}}</p>
+        <p><button @click="domChange()">测试改变dom的数字</button>：{{testCounter}}</p>
+        <ul>
+            <li>结论，只要dom中有改变，methods里面的方法都会被执行一遍。 </li>
+            <li><span class="text-danger">问题是为何调用totalPrice()时也改变了dom，却没有再调用testCounter()？</span></li>
+        </ul>
+    </section>
+    <section id="app3">
+        <h2>watch属性</h2>
+        <ul>
+            <li v-for="(book,index) in books">
+                <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
+                <button class="mr-2" @click="book.number++">+</button>
+                <button @click="book.number--">-</button>
+            </li>
+        </ul>
+        <p>总价：{{totalPrice}}</p>
+        <ul>
+            <li>结论，只要dom中有改变，methods里面的方法都会被执行一遍。 </li>
+        </ul>
     </section>
 </div>
 <script src="js/vue-2.5.17.js"></script>
