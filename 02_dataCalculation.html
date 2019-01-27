@@ -5,10 +5,11 @@
     <title>第二篇 动态数据的计算</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <style>
-        body{
+        body {
             margin-bottom: 3rem;
         }
-        body>.container>section{
+
+        body > .container > section {
             border-bottom: 1px solid lightgray;
             margin-bottom: 1.5rem;
         }
@@ -17,8 +18,8 @@
 </head>
 <body>
 <div class="container">
-<h1>第二篇 动态数据的计算</h1>
-<p>运行环境：vue-2.5.17.js，Chrome71</p>
+    <h1>第二篇 动态数据的计算</h1>
+    <p>运行环境：vue-2.5.17.js，Chrome71</p>
     <section id="app">
         <h2>表达式直接计算</h2>
         <p>原字符串：{{message}}</p>
@@ -34,9 +35,12 @@
             </li>
         </ul>
         <p>总价：{{totalPrice()}}</p>
-        <p><button @click="domChange()">测试改变dom的数字</button>：{{testCounter}}</p>
+        <p>
+            <button @click="domChange()">测试改变dom的数字</button>
+            ：{{testCounter}}
+        </p>
         <ul>
-            <li>结论，只要dom中有改变，methods里面的方法都会被执行一遍。 </li>
+            <li>结论，只要dom中有改变，methods里面的方法都会被执行一遍。</li>
             <li><span class="text-danger">问题是为何调用totalPrice()时也改变了dom，却没有再调用testCounter()？</span></li>
         </ul>
     </section>
@@ -50,14 +54,68 @@
             </li>
         </ul>
         <p>总价：{{totalPrice}}</p>
-        <p><button @click="domChange()">测试改变dom的数字</button>：{{testCounter}}</p>
+        <p>
+            <button @click="domChange()">测试改变dom的数字</button>
+            ：{{testCounter}}
+        </p>
         <ul>
-            <li>books写到watch里面，totalPrice就不会被更新dom时重新调用。 </li>
+            <li>books写到watch里面，totalPrice就不会被更新dom时重新调用。</li>
+        </ul>
+    </section>
+    <section id="app4">
+        <h2>watch属性异步请求</h2>
+        <ul>
+            <li v-for="(book,index) in books">
+                <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
+                <button class="mr-2" @click="book.number++">+</button>
+                <button @click="book.number--">-</button>
+            </li>
+        </ul>
+        <p>总价：{{totalPrice}}</p>
+        <ul>
+            <li>watch具有的异步请求功能，methods方法和computed属性是不具有的。</li>
+        </ul>
+    </section>
+    <section id="app5">
+        <h2>watch属性不适用的情况</h2>
+        <p>
+            <label for="firstName">firstName:</label><input id="firstName" type="text" v-model="firstName">
+            <label for="lastName">lastName:</label><input id="lastName" type="text" v-model="lastName">
+        </p>
+        <p>全名：{{fullName}}</p>
+        <ul>
+            <li>这个例子中对于firstName和lastName的声明是命令式且重复的，可以用接下来的computed属性来解决</li>
+        </ul>
+    </section>
+    <section id="app6">
+        <h2>computed属性</h2>
+        <p>
+            <label for="firstName2">firstName2:</label><input id="firstName2" type="text" v-model="firstName">
+            <label for="lastName2">lastName2:</label><input id="lastName2" type="text" v-model="lastName">
+        </p>
+        <p>全名：{{fullName}}</p>
+        <ul>
+            <li><span class="text-danger">后台报错：<code>[Vue warn]: Computed property "fullName" was assigned to but it has no setter.</code></span> </li>
+        </ul>
+    </section>
+    <section id="app7">
+        <h2>computed属性实现购物车</h2>
+        <ul>
+            <li v-for="(book,index) in books">
+                <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
+                <button class="mr-2" @click="book.number++">+</button>
+                <button @click="book.number--">-</button>
+            </li>
+        </ul>
+        <p>总价：{{totalPrice}}</p>
+
+        <ul>
+            <li>计算属性必须是一个带返回值的方法。</li>
         </ul>
     </section>
 </div>
 <script src="js/vue-2.5.17.js"></script>
 <script src='js/02_dataCalculation.js'></script>
-   
+
 </body>
 </html>
