@@ -36,6 +36,7 @@ let app2 = new Vue({
 let app3 = new Vue({
     el: '#app3',
     data: {
+        testCounter: 0,
         books: [
             {name: 'javaScript', number: 2, price: 35},
             {name: 'java', number: 1, price: 45},
@@ -44,17 +45,25 @@ let app3 = new Vue({
         ],
         totalPrice:0.00
     },
+    methods:{
+        domChange: function () {
+            console.log('调用 domChange');
+            this.testCounter++;
+        }
+    },
+
     watch: {
         books: {
             handler:function (val,oldVar) {
-                alert(1)
+                console.log('调用 totalPrice');
                 this.totalPrice = 0;
                 val.forEach(book => {
                     this.totalPrice += book.number * book.price;
                 });
-            }
+            },
+            deep:true
         },
-        deep:true
+        // deep:true
     }
 });
 

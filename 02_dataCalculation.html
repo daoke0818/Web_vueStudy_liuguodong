@@ -50,8 +50,9 @@
             </li>
         </ul>
         <p>总价：{{totalPrice}}</p>
+        <p><button @click="domChange()">测试改变dom的数字</button>：{{testCounter}}</p>
         <ul>
-            <li>结论，只要dom中有改变，methods里面的方法都会被执行一遍。 </li>
+            <li>books写到watch里面，totalPrice就不会被更新dom时重新调用。 </li>
         </ul>
     </section>
 </div>
