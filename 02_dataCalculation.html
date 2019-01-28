@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
     <title>第二篇 动态数据的计算</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <style>
@@ -21,7 +23,7 @@
     <h1>第二篇 动态数据的计算</h1>
     <p>运行环境：vue-2.5.17.js，Chrome71</p>
     <section id="app">
-        <h2>表达式直接计算</h2>
+        <h2>javaScript表达式直接计算</h2>
         <p>原字符串：{{message}}</p>
         <p>反转后的字符串：{{message.split('').reverse().join('')}}</p>
     </section>
@@ -40,8 +42,8 @@
             ：{{testCounter}}
         </p>
         <ul>
-            <li>结论，只要dom中有改变，methods里面的方法都会被执行一遍。</li>
-            <li><span class="text-danger">问题是为何调用totalPrice()时也改变了dom，却没有再调用testCounter()？</span></li>
+            <li>结论，只要dom中有改变，<code><p>总价：{ {totalPrice()} }</p></code>里面的方法会被调用，价格就要重新计算一遍。如果计算过程复杂就会有性能问题。</li>
+            <li><span class="text-danger">问题vue局部更新时，从<code>&#123; &#123;testCounter&#125; &#125;</code>到<code><p>总价：{ {totalPrice()} }</p></code>的范围如何界定？还是更新本组件内的dom?</span></li>
         </ul>
     </section>
     <section id="app3">
@@ -73,14 +75,14 @@
         </ul>
         <p>总价：{{totalPrice}}</p>
         <ul>
-            <li>watch具有的异步请求功能，methods方法和computed属性是不具有的。</li>
+            <li>watch具有的异步请求功能，methods方法和computed属性是不具有的。</li> 
         </ul>
     </section>
     <section id="app5">
         <h2>watch属性不适用的情况</h2>
         <p>
-            <label for="firstName">firstName:</label><input id="firstName" type="text" v-model="firstName">
-            <label for="lastName">lastName:</label><input id="lastName" type="text" v-model="lastName">
+            <label for="firstName">firstName:</label><input id="firstName" v-model="firstName">
+            <label for="lastName">lastName:</label><input id="lastName" v-model="lastName">
         </p>
         <p>全名：{{fullName}}</p>
         <ul>
@@ -90,8 +92,8 @@
     <section id="app6">
         <h2>computed属性</h2>
         <p>
-            <label for="firstName2">firstName2:</label><input id="firstName2" type="text" v-model="firstName">
-            <label for="lastName2">lastName2:</label><input id="lastName2" type="text" v-model="lastName">
+            <label for="firstName2">firstName2:</label><input id="firstName2" v-model="firstName">
+            <label for="lastName2">lastName2:</label><input id="lastName2" v-model="lastName">
         </p>
         <p>全名：{{fullName}}</p>
         <ul>
@@ -113,9 +115,44 @@
             <li>计算属性必须是一个带返回值的方法。</li>
         </ul>
     </section>
+    <section id="app8">
+        <h2>computed属性的get和set方法</h2>
+        <label for="setName">设置名字:</label> <input id="setName" @blur='setName'>
+        <p>全名：{{fullName}}</p>
+        <ul>
+            <li>这里取被多个空格分隔的第一个和最后一个拼成全名</li>
+        </ul>
+    </section>
+    <section id="app9">
+        <h2>computed属性的缓存</h2>
+        <p>computed的date: {{date1}}</p>
+        <p>methods的date: {{date2()}}</p>
+        <!--<h4>888毫秒之后: </h4>-->
+        <!--<p>computed的date: {{newDate1}}</p>-->
+        <!--<p>methods的date: {{newDate2}}</p>-->
+        <ul>
+            <li>查看控制台，可以发现computed属性读的是缓存值而不会随时间变化，这个缓存机制可以取消：
+                <pre class="text-danger">
+                    date1: {
+                        cache: false,
+                        get: function () {
+                            return Date.now();
+                        }
+                    }
+                </pre>
+            </li>
+            <li>控制台上的输出不能写到网页上，因为这样会触发页面渲染，导致<code>data2()</code>重新调用</li>
+        </ul>
+    </section>
+    <ol>总结：
+        <li>javaScript表达式，适用于简单计算。</li>
+        <li>methods方法，适用于复杂计算，但页面的重新渲染会导致方法重新调用而影响性能。</li>
+        <li>watch属性，比起methods属性，可以为特定目标的变动而调用特定方法，有异步功能，但目标有多个时更适合用computed属性。</li>
+        <li>computed属性，可以为多个依赖的目标设定被调函数，还有缓存机制，有get/set方法。</li>
+    </ol>
 </div>
+
 <script src="js/vue-2.5.17.js"></script>
 <script src='js/02_dataCalculation.js'></script>
-
 </body>
 </html>

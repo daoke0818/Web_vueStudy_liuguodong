@@ -142,7 +142,62 @@ let app7 = new Vue({
 
     }
 });
-
+let app8 = new Vue({
+    el: '#app8',
+    data: {
+        firstName: 'Li',
+        lastName: 'Yingjie',
+    },
+    methods:{
+        setName:function (e) {
+            this.fullName = e.target.value;
+        }
+    },
+    computed: {
+        fullName:{
+            get:function () {
+                return this.fullName = this.firstName + ' ' + this.lastName;
+            },
+            set:function (newVal) {
+                let names = newVal.split(" ");
+                this.firstName = names[0];
+                this.lastName = names[names.length - 1];
+            }
+        }
+    }
+});
+let app9 = new Vue({
+    el: '#app9',
+    data: {
+        newDate1:'',
+        newDate2:'',
+    },
+    computed:{
+        date1:function () {
+            return Date.now();
+        }
+        /*下面代码可取消缓存机制*/
+        /*date1: {
+            cache: false,
+            get: function () {
+                return Date.now();
+            }
+        }*/
+    },
+    methods:{
+        date2:function () {
+            return Date.now();
+        }
+    },
+    created:function(){
+        setTimeout(() =>{
+            console.log('date1: '+this.date1);
+            console.log('date2: '+this.date2())
+            // this.newDate1 = this.date1;
+            // this.newDate2 = this.date2();
+        },1500);
+    }
+});
 
 
 
