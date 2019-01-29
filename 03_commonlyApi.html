@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>第三篇 常用的api</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        body {
+            margin-bottom: 3rem;
+        }
+
+        body > .container > section {
+            border-bottom: 1px solid lightgray;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <h1>第三篇 常用的api</h1>
+    <p>运行环境：vue-2.5.17.js，Chrome71</p>
+    <section id="app">
+        <h2>set添加数量属性</h2>
+        <ul>
+            <li v-for="(book,index) in books">
+                <span class="mr-3">《{{book.name}}》</span>
+                <span class="mr-3">{{book.price.toFixed(2)}}元/本</span>
+                <span class="mr-3">{{book.number}}本</span>
+                <button class="mr-2" @click="book.number++">+</button>
+                <button @click="book.number--">-</button>
+            </li>
+        </ul>
+        <p>总价：{{totalPrice}}</p>
+        <ul>
+            <li><code>book.number = 1</code>这样添加的属性不具有响应性</li>
+            <li><code>app.$set(book, 'number', 1);</code> 注意set前的<strong>$</strong>,这种写法在异步时app已经赋值，故可用，而同步时不能用，因为app未定义
+            </li>
+            <li><code>this.$set(book, 'number', 1);</code> 和上面相比，同步异步都可用</li>
+            <li><code>Vue.set(book, 'number', 1);</code> 全局的，任何时候也都能用</li>
+            <li>计算属性中的方法定义不能用箭头函数，据查是因为计算属性中的this绑定了上下文的缘故</li>
+            <li>delete与set类似，不再重复说明</li>
+        </ul>
+    </section>
+    <section id="app2">
+        <h2>filter过滤器(全局)</h2>
+        <p>车牌号为：<strong>鲁B {{plateNum | numberFilter}}</strong></p>
+        <p>请输入车牌号： <input v-model="plateNum"></p>
+    </section>
+    <section id="app3">
+        <h2>filter过滤器(局部)以及传参</h2>
+        <p>车牌号为：<strong>鲁B {{plateNum | upperCaseFilter|substringFilter(5)}}</strong></p>
+        <p>请输入车牌号： <input v-model="plateNum"></p>
+    </section>
+    <ul>
+        <li>filter总接收表达式的值作为第⼀个参数，后面才是自定义参数</li>
+        <li>每个filter有自己的功能，方便组件间更好的复用</li>
+    </ul>
+    <section id="app4">
+        <h2>directive自定义指令（模拟v-show）</h2>
+        <label><input type="checkbox" checked v-model="isShow"> 测试下面文本的显示</label>
+        <p v-myShow="isShow">hello！</p>
+    </section>
+    <ul>
+        <li>filter创建时后面是个方法，而directive后面是个对象</li>
+        <li>这个对象的属性具有如下钩子函数(什么时候起作用)：
+            <ul>
+                <li><code class="mr-1">bind</code>绑定时</li>
+                <li><code class="mr-1">inserted</code>被插入到父元素时</li>
+                <li><code class="mr-1">update</code>自己更新时</li>
+                <li><code class="mr-1">componentUpdated</code>自己以及孩子更新时</li>
+                <li><code class="mr-1">unbind</code>解绑时</li>
+            </ul>
+        </li>
+        <li>以上所有方法都接受4个参数(如何绑定)：
+            <ul>
+                <li><code class="mr-1">el</code>指令所绑定的元素，可用来直接操作DOM</li>
+                <li><code class="mr-1">binding</code>是一个对象(绑定哪些内容)，如下：
+                    <ul>
+                        <li><code class="mr-1">name</code>指令名，不包括v-前缀</li>
+                        <li><code class="mr-1">value</code>绑定的值(表达式的计算结果)</li>
+                        <li><code class="mr-1">oldValue</code>绑定的前一个值，仅在updated和componentUpdated钩子中可用</li>
+                        <li><code class="mr-1">expression</code>绑定的值(字符串形式)</li>
+                        <li><code class="mr-1">arg</code>传给指令的参数</li>
+                        <li><code class="mr-1">modifiers</code>包含修饰符的对象</li>
+                    </ul>
+                </li>
+                <li><code class="mr-1">vnode</code>vue编译生成的虚拟节点</li>
+                <li><code class="mr-1">oldVnode</code>上一个虚拟节点，仅在updated和componentUpdated钩子中可用</li>
+            </ul>
+        </li>
+        <li class="text-danger">HTML中v-后面的指令会被转成小写，所以定义的时候写成大写就找不到了！</li>
+        <li class="text-danger">如果一开始就不显示，isShow为true之后却能显示？</li>
+    </ul>
+</div>
+
+<script src="js/vue-2.5.17.js"></script>
+<script src='js/03_commonlyApi.js'></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
