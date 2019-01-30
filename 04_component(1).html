@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>第四篇 组件(上)</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>第四篇 组件(上)</h1>
+    <p>运行环境：vue-2.5.17.js，Chrome71</p>
+    <section id="app">
+        <h2>全局组件</h2>
+        <p>
+            <btn-success></btn-success>
+            <btn-success></btn-success>
+            <btn-success></btn-success>
+        </p>
+    </section>
+    <section id="app2">
+        <h2>每个组件有自己独立的数据</h2>
+        <p>
+            <btn-counter></btn-counter>
+            <btn-counter></btn-counter>
+            <btn-counter></btn-counter>
+        </p>
+        <ul class="mySummary">
+            <li>自定义组件中的属性data必须是个有返回对象的方法，而不像之前一样是个对象</li>
+            <li>全局注册的组件，无论是否引用，都会包含到最终的构建结果中</li>
+        </ul>
+    </section>
+    <section id="app3">
+        <h2>局部注册的组件</h2>
+        <p>
+            <btn-count-add></btn-count-add>
+            <btn-count-add></btn-count-add>
+        </p>
+    </section>
+    <section id="app4">
+        <h2>局部注册的组件模块化结构</h2>
+        <p>
+            <btn-counter></btn-counter>
+            <btn-counter></btn-counter>
+        </p>
+        <ul class="mySummary">
+            <li>采用es6模块写法要注意：<code>&lt;script&gt;</code>标签要加 <code>type="module"</code>才能识别<code>import</code>这些模块相关的关键字
+            </li>
+            <li>虽然局部组件易于打包，但组件过多会导致大量写import命令也很繁琐，解决方案是利用Vue自动全局注册，具体例子略</li>
+        </ul>
+    </section>
+    <section id="app5">
+        <h2>组件传参之前的样子</h2>
+        <p>
+            <main-view></main-view>
+        </p>
+        <ul class="mySummary">
+            <li>自定义组件中methods里的方法也不能使用箭头函数</li>
+        </ul>
+    </section>
+    <section id="app6">
+        <h2>父子组件传参</h2>
+        <p>
+            <app6-main-view></app6-main-view>
+        </p>
+        <ul class="mySummary">
+            <li>父子组件通信的属性名字应该出现在：
+                <ul>
+                    <li>调用子组件的标签中的属性<code>&lt;desc-view :<strong>pushSubDesc</strong>="desc"&gt;&lt;/desc-view&gt;</code>（写到子组件模板内的标签属性里是不行的）</li>
+                    <li>注册子组件时对象的props属性里</li>
+                    <li>子组件模板里可能使用的地方</li>
+                </ul>
+            </li>
+            <li>直接修改子组件的属性会在控制台收到警告，也不会影响到父组件的对应值（<span class="text-danger">如何验证？</span>），因为Prop属性具有“单向下行绑定的特性”</li>
+        </ul>
+    </section>
+</div>
+
+<script src="assets/js/vue-2.5.17.js"></script>
+<script src="assets/js/jquery-3.3.1.js"></script>
+<script src='js/common.js'></script>
+<script type="x-template" id="main-view">
+    <div>
+        <p>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Android')">安卓</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Apple')">苹果</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('JavaScript')">Vue</button>
+        </p>
+        <p>{{desc}}</p>
+    </div>
+</script>
+<script type="x-template" id="app6-main-view">
+    <div>
+        <p>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Android')">安卓</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Apple')">苹果</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('JavaScript')">Vue</button>
+        </p>
+        <desc-view :pushSubDesc="desc"></desc-view>
+    </div>
+</script>
+<script type="module" src='js/04_component(1).js'></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
