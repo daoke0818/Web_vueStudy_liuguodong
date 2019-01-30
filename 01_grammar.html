@@ -5,80 +5,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit">
     <title>第一篇 基础语法</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <style>
-        body{
-            margin-bottom: 3rem;
-        }
-        body>.container>section{
-            border-bottom: 1px solid lightgray;
-            margin-bottom: 1.5rem;
-        }
-
-        .underLine{
-            text-decoration: underline;
-        }
-    </style>
-
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
 <div class="container">
-<h1>第一篇 基础语法</h1>
-<p>运行环境：vue-2.5.17.js，Chrome71</p>
-    <section>
-        <div id="app">
-            <h2>声明式渲染</h2>
-            {{message}}
-            {{new Date().getTime()}}<br>
-            <span :title="title">移到我上面查看标题</span><br>
-            <img :src="src" :alt="alt">
-        </div>
-        <ul>
+    <h1>第一篇 基础语法</h1>
+    <p>运行环境：vue-2.5.17.js，Chrome71</p>
+    <section id="app">
+        <h2>声明式渲染</h2>
+        {{message}}
+        {{new Date().getTime()}}<br>
+        <span :title="title">移到我上面查看标题</span><br>
+        <img :src="src" :alt="alt">
+        <ul class="mySummary">
             <li>采用Mustache的渲染方法：{{ }}
             <li>vue渲染的时机要比DOMContentLoaded早几毫秒。</li>
         </ul>
     </section>
-    <section>
-        <div id="app2">
-            <h2>条件渲染</h2>
-            <div v-if="number===1">
-                number是1
-            </div>
-            <div v-if="number===2">
-                number是2
-            </div>
-            <div v-show="isShow">
-                显示了
-            </div>
+    <section id="app2">
+        <h2>条件渲染</h2>
+        <div v-if="number===1">
+            number是1
         </div>
-        <ul>
+        <div v-if="number===2">
+            number是2
+        </div>
+        <div v-show="isShow">
+            显示了
+        </div>
+        <ul class="mySummary">
             <li>v-if在条件不满足时不渲染
             <li>v-show在条件不满足时通过css将元素隐藏
         </ul>
     </section>
-    <section>
-        <div id="app3">
-            <h2>列表渲染(数组)</h2>
-            <ul>
-                <li v-for="(item,index) in items" v-show="item.price>10" v-bind:key="index">{{index+': '+
-                    item.name+','+item.price}}
-
-                </li>
-            </ul>
-        </div>
+    <section id="app3">
+        <h2>列表渲染(数组)</h2>
         <ul>
+            <li v-for="(item,index) in items" v-show="item.price>10" v-bind:key="index">{{index+': '+
+                item.name+','+item.price}}
+
+            </li>
+        </ul>
+        <ul class="mySummary">
             <li>这里的index作为每条数据的id,在列表更新是，可通过key决定DOM的复用策略</li>
             <li>在控制台可以通过<code>app3.items.push({name:'music',price:12})</code>来添加数据，实时显示</li>
         </ul>
     </section>
-    <section>
-        <div id="app4">
-            <h2>列表渲染(对象)</h2>
-            <ul>
-                <li v-for="(value,key,index) in obj">{{`${index}- ${key}:${value}`}}</li>
-            </ul>
-        </div>
+    <section id="app4">
+        <h2>列表渲染(对象)</h2>
         <ul>
+            <li v-for="(value,key,index) in obj">{{`${index}- ${key}:${value}`}}</li>
+        </ul>
+        <ul class="mySummary">
             <li>遍历对象时有三个参数，分别是值、键和下标</li>
             <li>
                 遍历的对象不能在控制台中通过<code>app4.obj.other='another'</code>来增加属性，而要通过<code>Vue.set(app4.obj,'newKey','newValue')</code>来实现。因为Vue对有的属性变化检测不到
@@ -109,153 +88,156 @@
             </li>
         </ul>
     </section>
-    <section>
-        <div id="app5">
-            <h2>属性绑定</h2>
-            <p :title="testTitle1Key+'-'+testTitle2Key">测试拼接字符串:{{testTitle1Key+'-'+testTitle2Key}}</p>
-            <p :title="testTitle4Key-testTitle3Key">测试算术运算:{{testTitle4Key-testTitle3Key}}</p>
-            <p :title="testObj">测试对象(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testObj}}</p>
-            <p :title="testObj2">测试的象重写toString(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testObj2}}</p>
-            <p :title="testArr">测试数组:{{testArr}}</p>
-            <p :title="testArr2">(<strong class="text-danger">这里不知如何重写</strong>)测试数组重写toString:{{testArr2}}</p>
-            <p :title="testMethod()">测试方法:{{testMethod()}}</p>
-        </div>
-        <ul>
+    <section id="app5">
+        <h2>属性绑定</h2>
+        <p :title="testTitle1Key+'-'+testTitle2Key">测试拼接字符串:{{testTitle1Key+'-'+testTitle2Key}}</p>
+        <p :title="testTitle4Key-testTitle3Key">测试算术运算:{{testTitle4Key-testTitle3Key}}</p>
+        <p :title="testObj">测试对象(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testObj}}</p>
+        <p :title="testObj2">测试的象重写toString(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testObj2}}</p>
+        <p :title="testArr">测试数组:{{testArr}}</p>
+        <p :title="testArr2">(<strong class="text-danger">这里不知如何重写</strong>)测试数组重写toString:{{testArr2}}</p>
+        <p :title="testMethod()">测试方法:{{testMethod()}}</p>
+        <ul class="mySummary">
             <li>v-bind支持JavaScript单一表达式，可以绑定数组、对象和函数。其中前两者调用其toString方法，而函数输出其返回值。</li>
         </ul>
     </section>
-    <section>
-        <div id="app6">
-            <h2>class/样式绑定</h2>
-            <div :class="{'text-danger':isRed,'underLine':true}">看看我是不是带着下划线变红了</div>
-            <div :class="testClassObj">我是被<strong>对象</strong>设置的变绿色了</div>
-            <div :class="testClassArr">我是被<strong>数组</strong>设置的蓝色加下划线</div>
-            <div :class="[isRed?'text-danger':'text-success']">我是被<strong>三目运算符</strong>设置的颜色,class中的中括号可以不要</div>
-            <div :class="[{'underLine':true},testClassObj]">我是被<strong>数组中嵌套的对象</strong>设置的颜色</div>
-            <div style="font-size:1.25rem;" :style="isBlue ? 'color:#007bff' : 'color:red'">我是<strong>直接被style三目运算符表达式</strong>设置的颜色</div>
-            <div :style="{color:'#dc3545','font-weight':'bold',fontSize:testFontSize+'px'}">支持对象写法设置的颜色,属性名如果不带引号则需要用驼峰写法，带引号按需使用连字符。属性值可以拼接</div>
-            <div :style="testDisplay">请查看我的style属性——vue只渲染最后一个被浏览器支持的值</div>
+    <section id="app6">
+        <h2>class/样式绑定</h2>
+        <div :class="{'text-danger':isRed,'underLine':true}">看看我是不是带着下划线变红了</div>
+        <div :class="testClassObj">我是被<strong>对象</strong>设置的变绿色了</div>
+        <div :class="testClassArr">我是被<strong>数组</strong>设置的蓝色加下划线</div>
+        <div :class="[isRed?'text-danger':'text-success']">我是被<strong>三目运算符</strong>设置的颜色,class中的中括号可以不要</div>
+        <div :class="[{'underLine':true},testClassObj]">我是被<strong>数组中嵌套的对象</strong>设置的颜色</div>
+        <div style="font-size:1.25rem;" :style="isBlue ? 'color:#007bff' : 'color:red'">
+            我是<strong>直接被style三目运算符表达式</strong>设置的颜色
         </div>
+        <div :style="{color:'#dc3545','font-weight':'bold',fontSize:testFontSize+'px'}">
+            支持对象写法设置的颜色,属性名如果不带引号则需要用驼峰写法，带引号按需使用连字符。属性值可以拼接
+        </div>
+        <div :style="testDisplay">请查看我的style属性——vue只渲染最后一个被浏览器支持的值</div>
     </section>
-    <section>
+    <section id="app7">
         <h2>v-model绑定</h2>
-        <div id="app7">
-			<input v-model=testText>
-			<p>单行文本框的值为：{{testText}}</p>
-            <input type="checkbox" id="checkbox1" value="天" v-model="testCheckbox">
-            <label class="mr-2" for="checkbox1">天</label>
-            <input type="checkbox" id="checkbox2" value="地" v-model="testCheckbox">
-            <label class="mr-2" for="checkbox2">地</label>
-            <input type="checkbox" id="checkbox3" value="人" v-model="testCheckbox">
-            <label class="mr-2" for="checkbox3">人</label>
-            <p>复选框的绑定值为：{{testCheckbox}}</p>
-			<ul>多选框绑定
-				<li>如果v-model的值为<strong>数组</strong>，则依次绑定对应checkbox的value值，没有value的值为null且会同时动作；选中CheckBox后则自动添加对应value值到数组中。</li>
-				<li>如果v-model的值为<strong>字符串</strong>，则会绑定checked的值，这时有一个发生变化，所有的CheckBox都会同时动作，即是全选按钮效果。</li>
-			</ul>
-			<input type='radio' id='radio1' value='佛' v-model='testRadio'>
-			<label class="mr-2" for='radio1'>佛</label>
-			<input type='radio' id='radio2' value='魔' v-model='testRadio'>
-			<label class="mr-2" for='radio2'>魔</label>
-			<input type='radio' id='radio3' value='心' v-model='testRadio'>
-			<label class="mr-2" for='radio3'>心</label>
-			<input type='radio' id='radio4' value='未绑定v-model'>
-			<label class="mr-2" for='radio4'>未绑定v-model</label>
-			<p>单选按钮的绑定值为：{{testRadio}}</p>
-			<ul>单选按钮绑定
-				<li>v-model为字符串，值与选中单选按钮的value同步变化。</li>
-				<li>绑定相同的v-model值后不写name属性也会达到编组单选的效果。</li>
-			</ul>
-			<select v-model='testSelect'>
-				<option value=1>第一项</option>
-				<option value=2>第二项</option>
-				<option value=3>第三项</option>
-			</select>
-			<p>下拉框的绑定值为：{{testSelect}}</p>
-			<select multiple='true' v-model='testSelectMul'>
-				<option value=1>第一项</option>
-				<option value=2>第二项</option>
-				<option value=3>第三项</option>
-			</select>
-			<p>下拉框的绑定值为：{{testSelectMul}}</p>
-			<ul>下拉框绑定
-				<li>绑定的都是value值，单选下拉框的v-model为字符串，多选下拉框的v-model为数组。</li>
-			</ul>
-			<h3>v-model修饰符</h3>
-			<input v-model.lazy="testLazy" >
-			<p>.lazy——后面的数据在执行change事件时改变(本例中失焦时可观察到)：<span style='background:skyblue;'>{{testLazy}}</span></p>
-			<input v-model.number="testNumber" >
-			<p>.number——后面的数据自动转为Number类型(在控制台通过app7.testNumber查看,数字开头会去除后面的非数字，字母开头就是字符串)：<span style='background:skyblue;'>{{testNumber}}</span></p>
-			<input v-model.trim="testTrim" >
-			<p>.trim——后面的数据自动去除前后空格(<span class='text-danger'>貌似不写也只会保留前面一个空格和去除后面的空格)</span>：<span style='background:skyblue;'>{{testTrim}}</span></p>
-        </div>
+        <input v-model=testText>
+        <p>单行文本框的值为：{{testText}}</p>
+        <input type="checkbox" id="checkbox1" value="天" v-model="testCheckbox">
+        <label class="mr-2" for="checkbox1">天</label>
+        <input type="checkbox" id="checkbox2" value="地" v-model="testCheckbox">
+        <label class="mr-2" for="checkbox2">地</label>
+        <input type="checkbox" id="checkbox3" value="人" v-model="testCheckbox">
+        <label class="mr-2" for="checkbox3">人</label>
+        <p>复选框的绑定值为：{{testCheckbox}}</p>
+        <ul class="mySummary">多选框绑定
+            <li>如果v-model的值为<strong>数组</strong>，则依次绑定对应checkbox的value值，没有value的值为null且会同时动作；选中CheckBox后则自动添加对应value值到数组中。
+            </li>
+            <li>如果v-model的值为<strong>字符串</strong>，则会绑定checked的值，这时有一个发生变化，所有的CheckBox都会同时动作，即是全选按钮效果。</li>
+        </ul>
+        <input type='radio' id='radio1' value='佛' v-model='testRadio'>
+        <label class="mr-2" for='radio1'>佛</label>
+        <input type='radio' id='radio2' value='魔' v-model='testRadio'>
+        <label class="mr-2" for='radio2'>魔</label>
+        <input type='radio' id='radio3' value='心' v-model='testRadio'>
+        <label class="mr-2" for='radio3'>心</label>
+        <input type='radio' id='radio4' value='未绑定v-model'>
+        <label class="mr-2" for='radio4'>未绑定v-model</label>
+        <p>单选按钮的绑定值为：{{testRadio}}</p>
+        <ul class="mySummary">单选按钮绑定
+            <li>v-model为字符串，值与选中单选按钮的value同步变化。</li>
+            <li>绑定相同的v-model值后不写name属性也会达到编组单选的效果。</li>
+        </ul>
+        <select v-model='testSelect'>
+            <option value=1>第一项</option>
+            <option value=2>第二项</option>
+            <option value=3>第三项</option>
+        </select>
+        <p>下拉框的绑定值为：{{testSelect}}</p>
+        <select multiple='true' v-model='testSelectMul'>
+            <option value=1>第一项</option>
+            <option value=2>第二项</option>
+            <option value=3>第三项</option>
+        </select>
+        <p>下拉框的绑定值为：{{testSelectMul}}</p>
+        <ul class="mySummary">下拉框绑定
+            <li>绑定的都是value值，单选下拉框的v-model为字符串，多选下拉框的v-model为数组。</li>
+        </ul>
+        <h3>v-model修饰符</h3>
+        <input v-model.lazy="testLazy">
+        <p>.lazy——后面的数据在执行change事件时改变(本例中失焦时可观察到)：<span style='background:skyblue;'>{{testLazy}}</span></p>
+        <input v-model.number="testNumber">
+        <p>.number——后面的数据自动转为Number类型(在控制台通过app7.testNumber查看,数字开头会去除后面的非数字，字母开头就是字符串)：<span
+                style='background:skyblue;'>{{testNumber}}</span></p>
+        <input v-model.trim="testTrim">
+        <p>.trim——后面的数据自动去除前后空格(<span class='text-danger'>貌似不写也只会保留前面一个空格和去除后面的空格)</span>：<span
+                style='background:skyblue;'>{{testTrim}}</span></p>
     </section>
-    <section>
+    <section id="app8">
         <h2>事件绑定</h2>
-        <div id="app8">
-            <button v-on:click="counter+=1">counter+=1</button>
-            <p>直接绑定表达式 counter:{{counter}}</p>
-            <button @click="testOnclickMethods">testOnclickMethods</button>
-            <p>调用vue中自定义方法</p>
+        <button v-on:click="counter+=1">counter+=1</button>
+        <p>直接绑定表达式 counter:{{counter}}</p>
+        <button @click="testOnclickMethods">testOnclickMethods</button>
+        <p>调用vue中自定义方法</p>
+        <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
+        <p>方法传参</p>
+        <input v-model="inputMsg" @keyup="onChange">
+        <p>绑keyup事件 inputMsg：{{inputMsg}}</p>
+        <ul class="mySummary">
+            <li>如果使用原生的onclick则无法获取到vue定义的counter变量</li>
+            <li>直接调用vue中定义的方法，会默认传入当前的DOM原生事件</li>
+        </ul>
+        <h3>事件修饰符</h3>
+        <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
             <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
-            <p>方法传参</p>
-            <input v-model="inputMsg" @keyup="onChange">
-			<p>绑keyup事件 inputMsg：{{inputMsg}}</p>
-            <ul>
-                <li>如果使用原生的onclick则无法获取到vue定义的counter变量</li>
-                <li>直接调用vue中定义的方法，会默认传入当前的DOM原生事件</li>
-            </ul>
-            <h3>事件修饰符</h3>
-            <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
-                <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
-            </div>
-            <p>没有添加修饰符的情况</p>
-            <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
-                <button @click.stop="onSumClick(11,22)">onSumClick(11,22)</button>
-            </div>
-            <p><code>.stop</code>——阻止事件冒泡</p>
-            <a href="http://e-art.top" @click.prevent="onSumClick(11,22)" target="_blank">http://e-art.top</a>
-            <p><code>.prevent</code>——阻止默认事件（光弹出不跳转）</p>
-            <div class="p-3 border" @click.capture="testOnclickMethods">testOnclickMethods
-                <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
-            </div>
-            <p><code>.capture</code>——事件改为捕获模式（默认为冒泡）</p>
-            <div class="p-3 border" @click.self="testOnclickMethods">testOnclickMethods
-                <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
-            </div>
-            <p><code>.self</code>——只处理元素本身的事件，而不处理冒泡或捕获来的</p>
-            <div class="p-3 border" @click.once="testOnclickMethods">testOnclickMethods
-                <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
-            </div>
-            <p><code>.once</code>——事件触发一次后就被删除（包括被冒泡）</p>
-            <div id="#testScroll" @scroll.passive="onScroll" style='height:5rem;overflow: scroll;' class="p-3 border">
-				<div class='border' style="height:8rem;">滚动我试试？<div class='text-danger'>感受不够深刻</div></div>
-            </div>
-            <p><code>.passive</code>——恢复浏览器事件默认行为（如立即触发滚动，因为scroll事件中默认浏览器先处理事件再滚动），不能和prevent一起用，因为后者会被忽略。</p>
-            <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
-                <a href="http://e-art.top" @click.prevent.self="onSumClick(11,22)" target="_blank">http://e-art.top
-                    <button @click="onSumClick(1, 2)">onSumClick</button>
-                </a>
-            </div>
-            <p><code>.prevent.self</code>——阻止了a的所有事件</p>
-            <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
-                <a href="http://e-art.top" @click.self.prevent="onSumClick(11,22)" target="_blank">http://e-art.top
-                    <button @click="onSumClick(1, 2)">onSumClick</button>
-                </a>
-            </div>
-            <p><code>.self.prevent</code>——只阻止了a的点击事件，而通过捕获或冒泡来的事件会触发默认动作</p>
-            <ul>
-                <li class="text-danger">可以这样理解，对于a标签，事件触发有3种行为：浏览器默认+自身触发+捕获或冒泡触发；<br>
-                    .prevent.self在前相当于先阻止默认行为，再过滤掉捕获冒泡行为；<br>
-                    .self.prevent相当于先过滤出来自身的行为，再进行阻止默认行为，而对捕获冒泡来触发的默认事件没有阻止。
-                </li>
-            </ul>
-
         </div>
+        <p>没有添加修饰符的情况</p>
+        <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
+            <button @click.stop="onSumClick(11,22)">onSumClick(11,22)</button>
+        </div>
+        <p><code>.stop</code>——阻止事件冒泡</p>
+        <a href="http://e-art.top" @click.prevent="onSumClick(11,22)" target="_blank">http://e-art.top</a>
+        <p><code>.prevent</code>——阻止默认事件（光弹出不跳转）</p>
+        <div class="p-3 border" @click.capture="testOnclickMethods">testOnclickMethods
+            <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
+        </div>
+        <p><code>.capture</code>——事件改为捕获模式（默认为冒泡）</p>
+        <div class="p-3 border" @click.self="testOnclickMethods">testOnclickMethods
+            <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
+        </div>
+        <p><code>.self</code>——只处理元素本身的事件，而不处理冒泡或捕获来的</p>
+        <div class="p-3 border" @click.once="testOnclickMethods">testOnclickMethods
+            <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
+        </div>
+        <p><code>.once</code>——事件触发一次后就被删除（包括被冒泡）</p>
+        <div id="#testScroll" @scroll.passive="onScroll" style='height:5rem;overflow: scroll;' class="p-3 border">
+            <div class='border' style="height:8rem;">滚动我试试？
+                <div class='text-danger'>感受不够深刻</div>
+            </div>
+        </div>
+        <p><code>.passive</code>——恢复浏览器事件默认行为（如立即触发滚动，因为scroll事件中默认浏览器先处理事件再滚动），不能和prevent一起用，因为后者会被忽略。</p>
+        <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
+            <a href="http://e-art.top" @click.prevent.self="onSumClick(11,22)" target="_blank">http://e-art.top
+                <button @click="onSumClick(1, 2)">onSumClick</button>
+            </a>
+        </div>
+        <p><code>.prevent.self</code>——阻止了a的所有事件</p>
+        <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
+            <a href="http://e-art.top" @click.self.prevent="onSumClick(11,22)" target="_blank">http://e-art.top
+                <button @click="onSumClick(1, 2)">onSumClick</button>
+            </a>
+        </div>
+        <p><code>.self.prevent</code>——只阻止了a的点击事件，而通过捕获或冒泡来的事件会触发默认动作</p>
+        <ul class="mySummary">
+            <li class="text-danger">可以这样理解，对于a标签，事件触发有3种行为：浏览器默认+自身触发+捕获或冒泡触发；<br>
+                .prevent.self在前相当于先阻止默认行为，再过滤掉捕获冒泡行为；<br>
+                .self.prevent相当于先过滤出来自身的行为，再进行阻止默认行为，而对捕获冒泡来触发的默认事件没有阻止。
+            </li>
+        </ul>
+
     </section>
 </div>
-<script src="js/vue-2.5.17.js"></script>
+
+<script src="assets/js/jquery-3.3.1.js"></script>
+<script src="assets/js/vue-2.5.17.js"></script>
 <script src='js/01_grammar.js'></script>
-   
+<script src='js/common.js'></script>
 </body>
 </html>

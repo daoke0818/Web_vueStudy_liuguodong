@@ -65,7 +65,7 @@ Vue.directive('myshow', {
         if (binding.value === binding.oldValue) {
             return;
         }
-        el.style.display =  binding.value?el._originalDisplay:'none'
+        el.style.display = binding.value ? el._originalDisplay : 'none'
     }
 });
 let app4 = new Vue({
@@ -74,7 +74,23 @@ let app4 = new Vue({
         isShow: false
     }
 });
-
+let app5 = new Vue({
+    el: '#app5',
+    data: {
+        text: ''
+    },
+    created() {
+        this.text = '加载中。。。';
+        setTimeout(() => {
+            this.text = '这是一段<br>很长很长很长很长很长很长很长很长<br>很长很长很长很长很长很长很长很长很长<br>很长很长很长很长很长很长很长很长很长<br>很长很长很长很长很长很长很长很长很长很长<br>的文本<br>高度一百多像素';
+            let msgDom = document.getElementById('app5_msg');
+            // alert('文本高度为：'+msgDom.offsetHeight+'px');
+            this.$nextTick(() => {
+                alert('文本高度为：'+msgDom.offsetHeight+'px');
+            })
+        }, 1000)
+    }
+});
 
 
 

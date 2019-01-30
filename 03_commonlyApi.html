@@ -5,18 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit">
     <title>第三篇 常用的api</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <style>
-        body {
-            margin-bottom: 3rem;
-        }
-
-        body > .container > section {
-            border-bottom: 1px solid lightgray;
-            margin-bottom: 1.5rem;
-        }
-    </style>
-
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
 </head>
 <body>
 <div class="container">
@@ -34,7 +24,7 @@
             </li>
         </ul>
         <p>总价：{{totalPrice}}</p>
-        <ul>
+        <ul class="mySummary">
             <li><code>book.number = 1</code>这样添加的属性不具有响应性</li>
             <li><code>app.$set(book, 'number', 1);</code> 注意set前的<strong>$</strong>,这种写法在异步时app已经赋值，故可用，而同步时不能用，因为app未定义
             </li>
@@ -54,7 +44,7 @@
         <p>车牌号为：<strong>鲁B {{plateNum | upperCaseFilter|substringFilter(5)}}</strong></p>
         <p>请输入车牌号： <input v-model="plateNum"></p>
     </section>
-    <ul>
+    <ul class="mySummary">
         <li>filter总接收表达式的值作为第⼀个参数，后面才是自定义参数</li>
         <li>每个filter有自己的功能，方便组件间更好的复用</li>
     </ul>
@@ -62,42 +52,54 @@
         <h2>directive自定义指令（模拟v-show）</h2>
         <label><input type="checkbox" checked v-model="isShow"> 测试下面文本的显示</label>
         <p v-myShow="isShow">hello！</p>
+        <ul class="mySummary">
+            <li>filter创建时后面是个方法，而directive后面是个对象</li>
+            <li>这个对象的属性具有如下钩子函数(什么时候起作用)：
+                <ul>
+                    <li><code class="mr-1">bind</code>绑定时</li>
+                    <li><code class="mr-1">inserted</code>被插入到父元素时</li>
+                    <li><code class="mr-1">update</code>自己更新时</li>
+                    <li><code class="mr-1">componentUpdated</code>自己以及孩子更新时</li>
+                    <li><code class="mr-1">unbind</code>解绑时</li>
+                </ul>
+            </li>
+            <li>以上所有方法都接受4个参数(如何绑定)：
+                <ul>
+                    <li><code class="mr-1">el</code>指令所绑定的元素，可用来直接操作DOM</li>
+                    <li><code class="mr-1">binding</code>是一个对象(绑定哪些内容)，如下：
+                        <ul>
+                            <li><code class="mr-1">name</code>指令名，不包括v-前缀</li>
+                            <li><code class="mr-1">value</code>绑定的值(表达式的计算结果)</li>
+                            <li><code class="mr-1">oldValue</code>绑定的前一个值，仅在updated和componentUpdated钩子中可用</li>
+                            <li><code class="mr-1">expression</code>绑定的值(字符串形式)</li>
+                            <li><code class="mr-1">arg</code>传给指令的参数</li>
+                            <li><code class="mr-1">modifiers</code>包含修饰符的对象</li>
+                        </ul>
+                    </li>
+                    <li><code class="mr-1">vnode</code>vue编译生成的虚拟节点</li>
+                    <li><code class="mr-1">oldVnode</code>上一个虚拟节点，仅在updated和componentUpdated钩子中可用</li>
+                </ul>
+            </li>
+            <li class="text-danger">HTML中v-后面的指令会被转成小写，所以定义的时候写成大写就找不到了！</li>
+            <li class="text-danger">如果一开始就不显示，isShow为true之后却能显示？</li>
+        </ul>
     </section>
-    <ul>
-        <li>filter创建时后面是个方法，而directive后面是个对象</li>
-        <li>这个对象的属性具有如下钩子函数(什么时候起作用)：
-            <ul>
-                <li><code class="mr-1">bind</code>绑定时</li>
-                <li><code class="mr-1">inserted</code>被插入到父元素时</li>
-                <li><code class="mr-1">update</code>自己更新时</li>
-                <li><code class="mr-1">componentUpdated</code>自己以及孩子更新时</li>
-                <li><code class="mr-1">unbind</code>解绑时</li>
-            </ul>
-        </li>
-        <li>以上所有方法都接受4个参数(如何绑定)：
-            <ul>
-                <li><code class="mr-1">el</code>指令所绑定的元素，可用来直接操作DOM</li>
-                <li><code class="mr-1">binding</code>是一个对象(绑定哪些内容)，如下：
-                    <ul>
-                        <li><code class="mr-1">name</code>指令名，不包括v-前缀</li>
-                        <li><code class="mr-1">value</code>绑定的值(表达式的计算结果)</li>
-                        <li><code class="mr-1">oldValue</code>绑定的前一个值，仅在updated和componentUpdated钩子中可用</li>
-                        <li><code class="mr-1">expression</code>绑定的值(字符串形式)</li>
-                        <li><code class="mr-1">arg</code>传给指令的参数</li>
-                        <li><code class="mr-1">modifiers</code>包含修饰符的对象</li>
-                    </ul>
-                </li>
-                <li><code class="mr-1">vnode</code>vue编译生成的虚拟节点</li>
-                <li><code class="mr-1">oldVnode</code>上一个虚拟节点，仅在updated和componentUpdated钩子中可用</li>
-            </ul>
-        </li>
-        <li class="text-danger">HTML中v-后面的指令会被转成小写，所以定义的时候写成大写就找不到了！</li>
-        <li class="text-danger">如果一开始就不显示，isShow为true之后却能显示？</li>
-    </ul>
+    <section id="app5">
+        <h2>nextTick下次DOM更新后的回调</h2>
+        <p id="app5_msg" class="p-2 badge-info" v-HTML="text"></p>
+        <ul class="mySummary">
+            <li>alert如果不写在nextTick内，将无法获取加载后的高度，页面渲染时异步更新的，获取高度时页面可能还没加载完</li>
+            <li>实例中采用局部定义方式<code>this.$nextTick(() => {
+                alert('文本高度为：'+msgDom.offsetHeight+'px');
+                })</code>，可以用全局的<code>Vue.nextTick( [callback, context] )</code>，其中第二个参数默认指向window，可以更改</li>
+        </ul>
+    </section>
 </div>
 
-<script src="js/vue-2.5.17.js"></script>
+<script src="assets/js/vue-2.5.17.js"></script>
+<script src="assets/js/jquery-3.3.1.js"></script>
 <script src='js/03_commonlyApi.js'></script>
+<script src='js/common.js'></script>
 </body>
 </html>
 

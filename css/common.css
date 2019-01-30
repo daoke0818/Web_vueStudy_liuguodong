@@ -1,0 +1,40 @@
+.mySummary{
+    list-style: cjk-earthly-branch;
+}
+
+body {
+    margin-bottom: 3rem;
+}
+
+body > .container > section {
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 1.5rem;
+}
+
+body > .container > section h2{
+    margin-bottom: 1.5rem;
+    padding: .5rem;
+    background-color: var(--light);
+}
+
+h1{
+    margin: 1.5rem auto;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
