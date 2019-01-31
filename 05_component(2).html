@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>第五篇 组件(下)</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>第五篇 组件(下)</h1>
+    <p>运行环境：vue-2.5.17.js，Chrome71</p>
+    <section id="app">
+        <h2>父子组件传事件</h2>
+        <app-main-view></app-main-view>
+    </section>
+</div>
+<script type="text/x-template" id="app-main-view">
+    <div>
+        <p>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Android')">安卓</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Apple')">苹果</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Chrome')">谷歌</button>
+            <button class="btn btn-sm btn-primary" @click="onDescFontSizeClick()">放大描述字号</button>
+        </p>
+        <app-desc-view :pushSubDescObj="pushSubDescObj"></app-desc-view>
+    </div>
+</script>
+<script type="text/x-template" id="app-desc-view">
+<div>
+    <h3>{{pushSubDescObj.title}}</h3>
+    <div :style="{'font-size':fontSize + 'px'}">这是{{pushSubDescObj.desc}}的描述信息</div>
+</div>
+</script>
+<script src="assets/js/vue-2.5.17.js"></script>
+<script src="assets/js/jquery-3.3.1.js"></script>
+<script src='js/common.js'></script>
+<script src='js/05_component(2).js'></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
