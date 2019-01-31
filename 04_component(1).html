@@ -69,12 +69,71 @@
         <ul class="mySummary">
             <li>父子组件通信的属性名字应该出现在：
                 <ul>
-                    <li>调用子组件的标签中的属性<code>&lt;desc-view :<strong>pushSubDesc</strong>="desc"&gt;&lt;/desc-view&gt;</code>（写到子组件模板内的标签属性里是不行的）</li>
+                    <li>调用子组件的标签中的属性<code>&lt;desc-view
+                        :<strong>pushSubDesc</strong>="desc"&gt;&lt;/desc-view&gt;</code>（写到子组件模板内的标签属性里是不行的）
+                    </li>
                     <li>注册子组件时对象的props属性里</li>
                     <li>子组件模板里可能使用的地方</li>
                 </ul>
             </li>
             <li>直接修改子组件的属性会在控制台收到警告，也不会影响到父组件的对应值（<span class="text-danger">如何验证？</span>），因为Prop属性具有“单向下行绑定的特性”</li>
+            <li>如果要改变Prop，有以下2个方法：
+                <ul>
+                    <li>把属性写入data里，</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="app7">
+        <h2>父子同时修改子组件的prop(watch)</h2>
+        <p>
+            <app7-main-view></app7-main-view>
+        </p>
+        <ul class="mySummary">
+            <li>如果需要父组件和子组件都能改从父组件接过来的参数，做法是在子组件新建一个变量，用来接收父参数，子组件中使用这个变量</li>
+            <li>直接按上述写法会发现父组件传参不能触发子组件更新，解决方法是写一个watch属性，观察prop中的父参数，随时改到子参数中</li>
+        </ul>
+    </section>
+    <section id="app8">
+        <h2>父子同时修改子组件的prop(computed)</h2>
+        <p>
+            <app8-main-view></app8-main-view>
+        </p>
+        <ul class="mySummary">
+            <li class="text-danger">这个写法没有成功，修改本地computed属性时报错，书上源代码只是用一个本地的computed接了出去，并无其他动作</li>
+        </ul>
+    </section>
+    <section id="app9">
+        <h2>传递的参数类型为对象</h2>
+        <p>
+            <app9-main-view></app9-main-view>
+        </p>
+        <ul class="mySummary">
+            <li>父组件中要传的参数初始值设为undefined可以在初始化中不向子组件传参，以展示子组件默认值</li>
+            <li>父子组件中可以传递的参数类型有：<code>String,Number,Boolean,Array,Object,Date,Function,Symbol</code></li>
+            <li>子组件中接收参数时可以验证，验证的类型有：
+                <ul>
+                    <li><code>'null'</code> 允许任何类型</li>
+                    <li><code>[String,Number]</code> 允许多种类型</li>
+                    <li><code>{type:'String',required:true}</code> 必填</li>
+                    <li><code>{type:'Number',default:100}</code> 默认值为100的数字</li>
+                    <li>
+                        <pre style="color: var(--pink)">{
+    type: Object,
+    default: function () {
+        return { message: 'hello' }
+    }
+}</pre>对象或数组且⼀定会从⼀个⼯⼚函数返回默认值
+                    </li>
+                    <li>
+                        <pre style="color: var(--pink)">{
+    validator: function (value) {
+        return ['success', 'warning', 'danger'].indexOf(value) !== -1
+    }
+}</pre>这个值必须匹配这些字符串中的⼀个
+                    </li>
+                </ul>
+            </li>
         </ul>
     </section>
 </div>
@@ -82,7 +141,7 @@
 <script src="assets/js/vue-2.5.17.js"></script>
 <script src="assets/js/jquery-3.3.1.js"></script>
 <script src='js/common.js'></script>
-<script type="x-template" id="main-view">
+<script type="text/x-template" id="main-view">
     <div>
         <p>
             <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Android')">安卓</button>
@@ -92,14 +151,44 @@
         <p>{{desc}}</p>
     </div>
 </script>
-<script type="x-template" id="app6-main-view">
+<script type="text/x-template" id="app6-main-view">
     <div>
         <p>
             <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Android')">安卓</button>
             <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Apple')">苹果</button>
             <button class="btn btn-sm btn-primary" @click="onChangeDescClick('JavaScript')">Vue</button>
         </p>
-        <desc-view :pushSubDesc="desc"></desc-view>
+        <app6-desc-view :pushSubDesc="desc"></app6-desc-view>
+    </div>
+</script>
+<script type="text/x-template" id="app7-main-view">
+    <div>
+        <p>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Android')">安卓</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Apple')">苹果</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('JavaScript')">Vue</button>
+        </p>
+        <app7-desc-view :pushSubDesc="desc"></app7-desc-view>
+    </div>
+</script>
+<script type="text/x-template" id="app8-main-view">
+    <div>
+        <p>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Android')">安卓</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Apple')">苹果</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('JavaScript')">Vue</button>
+        </p>
+        <app8-desc-view :pushSubDesc="desc"></app8-desc-view>
+    </div>
+</script>
+<script type="text/x-template" id="app9-main-view">
+    <div>
+        <p>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Android')">安卓</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Apple')">苹果</button>
+            <button class="btn btn-sm btn-primary" @click="onChangeDescClick('JavaScript')">Vue</button>
+        </p>
+        <desc-view :pushSubDescObj="descObj"></desc-view>
     </div>
 </script>
 <script type="module" src='js/04_component(1).js'></script>

@@ -61,15 +61,16 @@ Vue.component('main-view', {
             desc: '描述信息：'
         }
     },
-    methods:{
+    methods: {
         onChangeDescClick: function (type) {
-            this.desc = '描述信息：这是'+type+'系统'
+            this.desc = '描述信息：这是' + type + '系统'
         }
     }
 });
 let app5 = new Vue({
     el: '#app5'
 });
+
 Vue.component('app6-main-view', {
     template: '#app6-main-view',
     data: function () {
@@ -77,28 +78,152 @@ Vue.component('app6-main-view', {
             desc: '描述信息：'
         }
     },
-    methods:{
+    methods: {
         onChangeDescClick: function (type) {
-            this.desc = '描述信息：这是'+type+'系统'
+            this.desc = '描述信息：这是' + type + '系统'
         },
     }
 });
-Vue.component('desc-view', {
+Vue.component('app6-desc-view', {
     template: '<p>{{pushSubDesc}}<br>' +
         '<button class="btn btn-sm btn-primary" @click="tryChangeSubProps">直接修改子组件的属性为windows</button></p>',
-    props:{
-        pushSubDesc:''
+    props: {
+        pushSubDesc: ''
     },
-    methods:{
-        tryChangeSubProps:function () {
-            this.pushSubDesc = 'windows'
+    methods: {
+        tryChangeSubProps: function () {
+            this.pushSubDesc = 'windows' //这样会出警告
         }
     }
-
-
 });
 let app6 = new Vue({
     el: '#app6'
+});
+// ----------------------------------------------------------------------------
+Vue.component('app7-main-view', {
+    template: '#app7-main-view',
+    data: function () {
+        return {
+            desc: '描述信息：'
+        }
+    },
+    methods: {
+        onChangeDescClick: function (type) {
+            this.desc = type
+        },
+    }
+});
+Vue.component('app7-desc-view', {
+    template: '<p>这是 {{subDesc}} 系统<br>' +
+        '<button class="btn btn-sm btn-primary" @click="tryChangeSubProps">修改子组件参数为windows</button></p>',
+    props: {
+        pushSubDesc: ''
+    },
+    data: function () {
+        return {
+            subDesc: '未知'
+        }
+    },
+    watch: {
+        pushSubDesc: function () {
+            this.subDesc = this.pushSubDesc;
+        }
+    },
+    methods: {
+        tryChangeSubProps: function () {
+            this.subDesc = 'windows'
+        }
+    }
+});
+let app7 = new Vue({
+    el: '#app7'
+});
+// -----------------------------------------------------------
+Vue.component('app8-main-view', {
+    template: '#app8-main-view',
+    data: function () {
+        return {
+            desc: '描述信息：'
+        }
+    },
+    methods: {
+        onChangeDescClick: function (type) {
+            this.desc = type
+        },
+    }
+});
+Vue.component('app8-desc-view', {
+    template: '<p>这是 {{subDesc}} 系统<br>' +
+        '<button class="btn btn-sm btn-primary" @click="tryChangeSubProps">修改子组件参数为windows</button></p>',
+    props: {
+        pushSubDesc: ''
+    },
+    data:function(){
+        return {}
+    },
+    computed: {
+        subDesc: {
+            get: function () {
+                return this.pushSubDesc;
+            },
+            set: function (val) {
+                this.temp = val;
+            }
+        },
+        temp:{
+            get: function () {
+                return this.pushSubDesc;
+            },
+            set: function (val) {
+                this.subDesc = val;
+            }
+        },
+
+    },
+    methods: {
+        tryChangeSubProps: function () {
+            this.subDesc = 'windows'
+        }
+    }
+});
+let app8 = new Vue({
+    el: '#app8'
+});
+// ----------------------------------------------------------------------------
+Vue.component('app9-main-view', {
+    template: '#app9-main-view',
+    data: function () {
+        return {
+            // 这里写成undefined可以保证不向子组件传递参数，会展示子组件默认值
+            descObj: undefined
+        }
+    },
+    methods: {
+        onChangeDescClick: function (type) {
+            this.descObj = {
+                title: type,
+                msg: '这里是' + type + '的信息。'
+            }
+        }
+    }
+});
+Vue.component('desc-view', {
+    //下面最外层的div不能写成p标签，因为p标签被内部的块元素割开后会导致模板最外成有多个元素。
+    template: '<div><h4>{{pushSubDescObj.title}}</h4><div class="my-3">{{pushSubDescObj.msg}}</div></div>',
+    props: {
+        pushSubDescObj: {
+            type: Object,
+            default: function () {
+                return {
+                    title: '这里是默认标题',
+                    msg: '这里是默认描述信息'
+                }
+            }
+        }
+    }
+});
+let app9 = new Vue({
+    el: '#app9'
 });
 
 
