@@ -36,7 +36,6 @@ Vue.component('app-desc-view', {
     created() {
         let $this = this;
         this.$root.$on('descFontSizeAdd', function (num) {
-            // alert($this.fontSize)
             $this.fontSize += num;
         })
     }
@@ -44,11 +43,27 @@ Vue.component('app-desc-view', {
 let app = new Vue({
     el: '#app'
 });
-Vue.component('app2-main-view',{
-    template:'<div><slot></slot></div>'
+Vue.component('app2-main-view', {
+    template: '<div><slot></slot></div>'
 });
 let app2 = new Vue({
-   el:'#app2'
+    el: '#app2'
+});
+Vue.component('app3-main-view', {
+    template: '#app3-main-view',
+
+});
+let app3 = new Vue({
+    el: '#app3',
+    data: function () {
+        return {
+            blogData: {
+                title: 'Blog标题',
+                time: new Date(),
+                desc: 'Blog内容'
+            }
+        }
+    }
 });
 
 

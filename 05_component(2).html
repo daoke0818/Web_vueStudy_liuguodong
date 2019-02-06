@@ -16,12 +16,42 @@
     <section id="app">
         <h2>父子组件传事件</h2>
         <app-main-view></app-main-view>
+        <ul class="mySummary">
+            <li>事件传递流程：
+                <ul>
+                    <li>点击“放大描述字号”按钮时，触发<code>onDescFontSizeClick</code>方法，此方法是查找一个注册过的事件<code>this.$root.$emit('descFontSizeAdd', 1)</code>并传参数1。</li>
+                    <li>子组件中注册过事件：<code>this.$root.$on('descFontSizeAdd', function (num) {
+                                                    $this.fontSize += num;
+                                                })</code>接收参数并触发动作。
+                    </li>
+                </ul>
+            </li>
+            <li><code>$root</code>是为了取到当前DOM元素的Vue对象。</li>
+            <li>注意触发事件<code>.$emit()</code>和注册事件<code>.$on()</code>前面的<strong>$</strong>符号</li>
+        </ul>
     </section>
     <section id="app2">
         <h2>插槽简单演示</h2>
         <app2-main-view>
             <span>这是显示在插槽中的信息</span>
         </app2-main-view>
+    </section>
+    <section id="app3">
+        <h2>插槽演示-Blog</h2>
+        <app3-main-view>
+            <h3 slot="title">{{blogData.title}}</h3>
+            <span slot="time">{{blogData.time}}</span>
+            <div>
+                <p>{{blogData.desc}}</p>
+            </div>
+        </app3-main-view>
+        <ul class="mySummary">
+            <li>具名插槽：在组件中定义时写好name属性，页面使用时在slot属性里写定义时对应的name值。</li>
+            <li>页面中用刀的数据应该写在new Vue时，而不能在定义组件时。组件里定义的数据只能在组件模板里访问。</li>
+        </ul>
+    </section>
+    <section id="app4">
+
     </section>
 </div>
 <script type="text/x-template" id="app-main-view">
@@ -40,6 +70,13 @@
     <h3>{{pushSubDescObj.title}}</h3>
     <div :style="{'font-size':fontSize + 'px'}">这是{{pushSubDescObj.desc}}的描述信息</div>
 </div>
+</script>
+<script type="text/x-template" id="app3-main-view">
+    <div>
+        <slot name="title"></slot>
+        <slot name="time"></slot>
+        <slot></slot>
+    </div>
 </script>
 <script src="assets/js/vue-2.5.17.js"></script>
 <script src="assets/js/jquery-3.3.1.js"></script>
