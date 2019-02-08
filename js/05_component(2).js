@@ -66,8 +66,30 @@ let app3 = new Vue({
     }
 });
 
+let app4ComponentA = {
+    template: '#app4ComponentA'
+};
+let app4ComponentB = {
+    template: '#app4ComponentB'
+};
+let app4ComponentC = {
+    template: '#app4ComponentC'
+};
+let app4 = new Vue({
+    el: '#app4',
+    data:function(){
+        return{
+            componentId:app4ComponentA
+        }
+    },
+    methods: {
+        onChangeComponentClick: function (name) {
+            console.log(name)
+            this.componentId = eval('app4Component' + name)
 
-
+        }
+    }
+});
 
 
 

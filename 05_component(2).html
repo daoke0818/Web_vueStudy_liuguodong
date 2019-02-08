@@ -19,10 +19,12 @@
         <ul class="mySummary">
             <li>事件传递流程：
                 <ul>
-                    <li>点击“放大描述字号”按钮时，触发<code>onDescFontSizeClick</code>方法，此方法是查找一个注册过的事件<code>this.$root.$emit('descFontSizeAdd', 1)</code>并传参数1。</li>
+                    <li>点击“放大描述字号”按钮时，触发<code>onDescFontSizeClick</code>方法，此方法是查找一个注册过的事件<code>this.$root.$emit('descFontSizeAdd',
+                        1)</code>并传参数1。
+                    </li>
                     <li>子组件中注册过事件：<code>this.$root.$on('descFontSizeAdd', function (num) {
-                                                    $this.fontSize += num;
-                                                })</code>接收参数并触发动作。
+                        $this.fontSize += num;
+                        })</code>接收参数并触发动作。
                     </li>
                 </ul>
             </li>
@@ -51,7 +53,14 @@
         </ul>
     </section>
     <section id="app4">
-
+        <h2>动态组件</h2>
+        <button class="btn btn-sm btn-primary" @click="onChangeComponentClick('A')">加载A模板</button>
+        <button class="btn btn-sm btn-primary" @click="onChangeComponentClick('B')">加载B模板</button>
+        <button class="btn btn-sm btn-primary" @click="onChangeComponentClick('C')">加载C模板</button>
+        <keep-alive><component :is="componentId">这里加载内容。。。</component></keep-alive>
+        <ul class="mySummary">
+            <li class="text-danger">用<code>&lt;keep-alive&gt;</code>包住<code>&lt;component&gt;</code>组件后，控制台的提示仍然在</li>
+        </ul>
     </section>
 </div>
 <script type="text/x-template" id="app-main-view">
@@ -66,10 +75,10 @@
     </div>
 </script>
 <script type="text/x-template" id="app-desc-view">
-<div>
-    <h3>{{pushSubDescObj.title}}</h3>
-    <div :style="{'font-size':fontSize + 'px'}">这是{{pushSubDescObj.desc}}的描述信息</div>
-</div>
+    <div>
+        <h3>{{pushSubDescObj.title}}</h3>
+        <div :style="{'font-size':fontSize + 'px'}">这是{{pushSubDescObj.desc}}的描述信息</div>
+    </div>
 </script>
 <script type="text/x-template" id="app3-main-view">
     <div>
@@ -77,6 +86,15 @@
         <slot name="time"></slot>
         <slot></slot>
     </div>
+</script>
+<script type="text/x-template" id="app4ComponentA">
+    <div>componentA的内容……</div>
+</script>
+<script type="text/x-template" id="app4ComponentB">
+    <div>componentB的内容……</div>
+</script>
+<script type="text/x-template" id="app4ComponentC">
+    <div> componentC的内容……</div>
 </script>
 <script src="assets/js/vue-2.5.17.js"></script>
 <script src="assets/js/jquery-3.3.1.js"></script>
