@@ -1,7 +1,17 @@
 .mySummary{
     list-style: cjk-earthly-branch;
 }
-
+code{
+    color: initial;
+    background: #C7EDCC;
+    padding: 0 .25rem;
+}
+pre{
+    background: #C7EDCC;
+}
+.text-danger *{
+    color: #bd2130 !important;
+}
 body {
     margin-bottom: 3rem;
 }
@@ -12,9 +22,9 @@ body > .container > section {
     padding-bottom: 1rem;
 }
 
-body > .container > section h2{
+body > .container > section h3{
     margin-bottom: 1rem;
-    padding: .5rem;
+    padding: .375rem;
     /*background-color: var(--light);*/
     background-color: #e6e6e6;
 }
@@ -23,7 +33,6 @@ h1{
     margin: 1.5rem auto;
     text-align: center;
 }
-
 
 
 

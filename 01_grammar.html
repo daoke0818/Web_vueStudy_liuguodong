@@ -11,9 +11,8 @@
 <body>
 <div class="container">
     <h1>第一篇 基础语法</h1>
-    <p>运行环境：vue-2.5.17.js，Chrome71</p>
     <section id="app">
-        <h2>声明式渲染</h2>
+        <h3>声明式渲染</h3>
         {{message}}
         {{new Date().getTime()}}<br>
         <span :title="title">移到我上面查看标题</span><br>
@@ -24,7 +23,7 @@
         </ul>
     </section>
     <section id="app2">
-        <h2>条件渲染</h2>
+        <h3>条件渲染</h3>
         <div v-if="number===1">
             number是1
         </div>
@@ -40,7 +39,7 @@
         </ul>
     </section>
     <section id="app3">
-        <h2>列表渲染(数组)</h2>
+        <h3>列表渲染(数组)</h3>
         <ul>
             <li v-for="(item,index) in items" v-show="item.price>10" v-bind:key="index">{{index+': '+
                 item.name+','+item.price}}
@@ -53,7 +52,7 @@
         </ul>
     </section>
     <section id="app4">
-        <h2>列表渲染(对象)</h2>
+        <h3>列表渲染(对象)</h3>
         <ul>
             <li v-for="(value,key,index) in obj">{{`${index}- ${key}:${value}`}}</li>
         </ul>
@@ -89,7 +88,7 @@
         </ul>
     </section>
     <section id="app5">
-        <h2>属性绑定</h2>
+        <h3>属性绑定</h3>
         <p :title="testTitle1Key+'-'+testTitle2Key">测试拼接字符串:{{testTitle1Key+'-'+testTitle2Key}}</p>
         <p :title="testTitle4Key-testTitle3Key">测试算术运算:{{testTitle4Key-testTitle3Key}}</p>
         <p :title="testObj">测试对象(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testObj}}</p>
@@ -102,7 +101,7 @@
         </ul>
     </section>
     <section id="app6">
-        <h2>class/样式绑定</h2>
+        <h3>class/样式绑定</h3>
         <div :class="{'text-danger':isRed,'underLine':true}">看看我是不是带着下划线变红了</div>
         <div :class="testClassObj">我是被<strong>对象</strong>设置的变绿色了</div>
         <div :class="testClassArr">我是被<strong>数组</strong>设置的蓝色加下划线</div>
@@ -117,7 +116,7 @@
         <div :style="testDisplay">请查看我的style属性——vue只渲染最后一个被浏览器支持的值</div>
     </section>
     <section id="app7">
-        <h2>v-model绑定</h2>
+        <h3>v-model绑定</h3>
         <input v-model=testText>
         <p>单行文本框的值为：{{testText}}</p>
         <input type="checkbox" id="checkbox1" value="天" v-model="testCheckbox">
@@ -171,7 +170,7 @@
                 style='background:skyblue;'>{{testTrim}}</span></p>
     </section>
     <section id="app8">
-        <h2>事件绑定</h2>
+        <h3>事件绑定</h3>
         <button v-on:click="counter+=1">counter+=1</button>
         <p>直接绑定表达式 counter:{{counter}}</p>
         <button @click="testOnclickMethods">testOnclickMethods</button>

@@ -11,14 +11,13 @@
 <body>
 <div class="container">
     <h1>第二篇 动态数据的计算</h1>
-    <p>运行环境：vue-2.5.17.js，Chrome71</p>
     <section id="app">
-        <h2>javaScript表达式直接计算</h2>
+        <h3>javaScript表达式直接计算</h3>
         <p>原字符串：{{message}}</p>
         <p>反转后的字符串：{{message.split('').reverse().join('')}}</p>
     </section>
     <section id="app2">
-        <h2>method方法</h2>
+        <h3>method方法</h3>
         <ul>
             <li v-for="(book,index) in books">
                 <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
@@ -37,7 +36,7 @@
         </ul>
     </section>
     <section id="app3">
-        <h2>watch属性</h2>
+        <h3>watch属性</h3>
         <ul>
             <li v-for="(book,index) in books">
                 <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
@@ -55,7 +54,7 @@
         </ul>
     </section>
     <section id="app4">
-        <h2>watch属性异步请求</h2>
+        <h3>watch属性异步请求</h3>
         <ul>
             <li v-for="(book,index) in books">
                 <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
@@ -69,7 +68,7 @@
         </ul>
     </section>
     <section id="app5">
-        <h2>watch属性不适用的情况</h2>
+        <h3>watch属性不适用的情况</h3>
         <p>
             <label for="firstName">firstName:</label><input id="firstName" v-model="firstName">
             <label for="lastName">lastName:</label><input id="lastName" v-model="lastName">
@@ -80,7 +79,7 @@
         </ul>
     </section>
     <section id="app6">
-        <h2>computed属性</h2>
+        <h3>computed属性</h3>
         <p>
             <label for="firstName2">firstName2:</label><input id="firstName2" v-model="firstName">
             <label for="lastName2">lastName2:</label><input id="lastName2" v-model="lastName">
@@ -91,7 +90,7 @@
         </ul>
     </section>
     <section id="app7">
-        <h2>computed属性实现购物车</h2>
+        <h3>computed属性实现购物车</h3>
         <ul>
             <li v-for="(book,index) in books">
                 <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
@@ -106,7 +105,7 @@
         </ul>
     </section>
     <section id="app8">
-        <h2>computed属性的get和set方法</h2>
+        <h3>computed属性的get和set方法</h3>
         <label for="setName">设置名字:</label> <input id="setName" @blur='setName'>
         <p>全名：{{fullName}}</p>
         <ul class="mySummary">
@@ -114,7 +113,7 @@
         </ul>
     </section>
     <section id="app9">
-        <h2>computed属性的缓存</h2>
+        <h3>computed属性的缓存</h3>
         <p>computed的date: {{date1}}</p>
         <p>methods的date: {{date2()}}</p>
         <!--<h4>888毫秒之后: </h4>-->

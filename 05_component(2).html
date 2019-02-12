@@ -12,9 +12,8 @@
 
 <div class="container">
     <h1>第五篇 组件(下)</h1>
-    <p>运行环境：vue-2.5.17.js，Chrome71</p>
     <section id="app">
-        <h2>父子组件传事件</h2>
+        <h3>父子组件传事件</h3>
         <app-main-view></app-main-view>
         <ul class="mySummary">
             <li>事件传递流程：
@@ -33,13 +32,13 @@
         </ul>
     </section>
     <section id="app2">
-        <h2>插槽简单演示</h2>
+        <h3>插槽简单演示</h3>
         <app2-main-view>
             <span>这是显示在插槽中的信息</span>
         </app2-main-view>
     </section>
     <section id="app3">
-        <h2>插槽演示-Blog</h2>
+        <h3>插槽演示-Blog</h3>
         <app3-main-view>
             <h3 slot="title">{{blogData.title}}</h3>
             <span slot="time">{{blogData.time}}</span>
@@ -53,7 +52,7 @@
         </ul>
     </section>
     <section id="app4">
-        <h2>动态组件</h2>
+        <h3>动态组件</h3>
         <button class="btn btn-sm btn-primary" @click="onChangeComponentClick('A')">加载A模板</button>
         <button class="btn btn-sm btn-primary" @click="onChangeComponentClick('B')">加载B模板</button>
         <button class="btn btn-sm btn-primary" @click="onChangeComponentClick('C')">加载C模板</button>

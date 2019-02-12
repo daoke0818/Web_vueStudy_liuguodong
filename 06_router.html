@@ -12,16 +12,57 @@
 
 <div class="container">
     <h1>第六篇 路由</h1>
-    <p>运行环境：vue-2.5.17.js，Chrome71</p>
+
     <section id="app">
-        <h2>标准路由输出</h2>
+        <h3>标准路由输出</h3>
         <p>
             <router-link to="/one">one</router-link>
             <router-link to="/two">two</router-link>
         </p>
         <router-view></router-view>
+        <ul class="mySummary">
+            <li><code>&lt;router-link&gt;</code>会被渲染成<code>&lt;a&gt;</code>标签，其中to属性指向路由中要跳转的路径</li>
+            <li><code>&lt;router-view&gt;</code>指定通过路由渲染完并显示的页面位置</li>
+            <li>路由们是个数组，每个路由是个对象，其中path是路径；component是含template模板的对象；也可以有name属性配合跳转</li>
+            <li>这些路由们被<code>VueRouter</code>初始化成一个router，然后在<code>Vue</code>初始化时配置进去即可使用</li>
+        </ul>
+    </section>
+    <section id="app2">
+        <h3>动态路由</h3>
+        <p>
+            <router-link to="/one">one</router-link>
+            <router-link to="/user/aLuo">user</router-link>
+            <a href="#" @click.prevent="toNameClick">通过name跳转</a>
+            <a href="#" @click.prevent="toPathClick">通过path跳转</a>
+        </p>
+        <router-view></router-view>
+        <ul class="mySummary">
+            <li>在 Vue 实例内部，你可以通过 <code>$router</code> 访问路由实例</li>
+            <li><code>router.push</code> 方法可以让路由导航到不同的 URL</li>
+            <li>除了<code>path</code>，还可以用<code>name</code>来指定路由的跳转目标</li>
+            <li>动态路由初始化是要配置 <code>mode: 'history' </code>，但这样可能会引起地址栏路径的变化，请观察</li>
+            <li>动态路由中传入的参数被对应的带冒号的属性接收后，存放在<code>$router.params</code>中，如果有查询参数（即问号后面带的参数）则放在<code>$router.query</code>中</li>
+        </ul>
+    </section>
+    <section id="app3">
+        <h3>嵌套路由</h3>
+        <p>
+            这是父组件的内容。。。
+            <router-view></router-view>
+        </p>
     </section>
 </div>
+<script type="text/template-x" id="app3-sup">
+    <div class="bg-warning">
+        这是子组件内容
+        <p>
+            <router-link @click.prevent to="/sub1">sub1</router-link>
+            <router-link @click.prevent to="/sub2">sub2</router-link>
+        </p>
+        <router-view></router-view>
+    </div>
+</script>
+
 <script src="assets/js/vue-2.5.17.js"></script>
 <script src="assets/js/vue-router-3.0.2.js"></script>
 <script src="assets/js/jquery-3.3.1.js"></script>

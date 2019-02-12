@@ -11,9 +11,8 @@
 <body>
 <div class="container">
     <h1>第三篇 常用的api</h1>
-    <p>运行环境：vue-2.5.17.js，Chrome71</p>
     <section id="app">
-        <h2>set添加数量属性</h2>
+        <h3>set添加数量属性</h3>
         <ul>
             <li v-for="(book,index) in books">
                 <span class="mr-3">《{{book.name}}》</span>
@@ -35,12 +34,12 @@
         </ul>
     </section>
     <section id="app2">
-        <h2>filter过滤器(全局)</h2>
+        <h3>filter过滤器(全局)</h3>
         <p>车牌号为：<strong>鲁B {{plateNum | numberFilter}}</strong></p>
         <p>请输入车牌号： <input v-model="plateNum"></p>
     </section>
     <section id="app3">
-        <h2>filter过滤器(局部)以及传参</h2>
+        <h3>filter过滤器(局部)以及传参</h3>
         <p>车牌号为：<strong>鲁B {{plateNum | upperCaseFilter|substringFilter(5)}}</strong></p>
         <p>请输入车牌号： <input v-model="plateNum"></p>
     </section>
@@ -49,7 +48,7 @@
         <li>每个filter有自己的功能，方便组件间更好的复用</li>
     </ul>
     <section id="app4">
-        <h2>directive自定义指令（模拟v-show）</h2>
+        <h3>directive自定义指令（模拟v-show）</h3>
         <label><input type="checkbox" checked v-model="isShow"> 测试下面文本的显示</label>
         <p v-myShow="isShow">hello！</p>
         <ul class="mySummary">
@@ -85,7 +84,7 @@
         </ul>
     </section>
     <section id="app5">
-        <h2>nextTick下次DOM更新后的回调</h2>
+        <h3>nextTick下次DOM更新后的回调</h3>
         <p id="app5_msg" class="p-2 badge-info" v-HTML="text"></p>
         <ul class="mySummary">
             <li>alert如果不写在nextTick内，将无法获取加载后的高度，页面渲染时异步更新的，获取高度时页面可能还没加载完</li>
