@@ -48,14 +48,23 @@
                     <li><code>state</code>：唯一的数据源</li>
                     <li><code>mutations</code>：修改数据的方法，第一个参数默认是state</li>
                     <li><code>actions</code>：函数接受一个与store实例有相同方法和属性的context对象，可以通过<code>context.commit</code>提交一个mutation，实现异步需求，但context并不是store实例本身</li>
-                    <li><code>modules</code>：如果有多个store的话可以分模块管理，每个模块有这些独立的参数</li>
-                    <li><code>getters</code>：计算属性，可以缓存数据，只根据依赖改变</li>
                 </ul>
             </li>
         </ul>
     </section>
     <section id="app5">
         <h3>Vuex其他属性(略)</h3>
+        <app5-com-1></app5-com-1>
+        <app5-com-2></app5-com-2>
+        <ul class="mySummary">
+            <li></li>
+            <li>Vuex中的modules和getters属性：
+                <ul>
+                    <li><code>modules</code>：如果有多个store的话可以分模块管理，每个模块有这些独立的参数</li>
+                    <li><code>getters</code>：计算属性，可以缓存数据，只根据依赖改变，第一个参数默认是state，第二个参数是其他getters</li>
+                </ul>
+            </li>
+        </ul>
     </section>
 </div>
 
@@ -95,6 +104,17 @@
 </script>
 <script type="text/x-template" id="app4-com-2">
     <div><p>count: {{$store.state.count}}</p></div>
+</script>
+<script type="text/x-template" id="app5-com-1">
+    <div>
+        <input type="button" @click="onCountClick" value="count++">
+    </div>
+</script>
+<script type="text/x-template" id="app5-com-2">
+<div>
+    <p>count:{{this.$store.state.a.count}}</p>
+    <p>count:{{this.$store.getters.doubleCount}}</p>
+</div>
 </script>
 
 <script src="assets/js/vue-2.5.17.js"></script>
