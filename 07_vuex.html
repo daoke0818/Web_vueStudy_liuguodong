@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>第七篇 状态管理——Vuex</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>第七篇 状态管理——Vuex</h1>
+
+    <section id="app">
+        <h3>参照例子——父子组件通信</h3>
+        <app-com-1></app-com-1>
+        <ul class="mySummary">
+            <li>和前面组件中父子通信部分一样</li>
+        </ul>
+    </section>
+    <section id="app2">
+        <h3>全局存储</h3>
+        <app2-com-1></app2-com-1>
+        <app2-com-2></app2-com-2>
+        <ul class="mySummary">
+            <li>通过增加公共变量store来存储需要共享的数据，简单粗暴</li>
+            <li>问题是，数据的改变没有痕迹，跟踪调试很困难</li>
+        </ul>
+    </section>
+    <section id="app3">
+        <h3>store模式</h3>
+        <app3-com-1></app3-com-1>
+        <app3-com-2></app3-com-2>
+        <ul class="mySummary">
+            <li>在上述例子基础上扩展store内容，数据存放在state中，增加的mutation属性用来存放修改数据的方法</li>
+        </ul>
+    </section>
+    <section id="app4">
+        <h3>Vuex</h3>
+        <app4-com-1></app4-com-1>
+        <app4-com-2></app4-com-2>
+        <ul class="mySummary">
+            <li>子组件可以通过<code>this.$store</code>访问到根组件下的store实例</li>
+            <li>Vuex中的各个属性：
+                <ul>
+                    <li><code>state</code>：唯一的数据源</li>
+                    <li><code>mutations</code>：修改数据的方法，第一个参数默认是state</li>
+                    <li><code>actions</code>：函数接受一个与store实例有相同方法和属性的context对象，可以通过<code>context.commit</code>提交一个mutation，实现异步需求，但context并不是store实例本身</li>
+                    <li><code>modules</code>：如果有多个store的话可以分模块管理，每个模块有这些独立的参数</li>
+                    <li><code>getters</code>：计算属性，可以缓存数据，只根据依赖改变</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="app5">
+        <h3>Vuex其他属性(略)</h3>
+    </section>
+</div>
+
+<script type="text/x-template" id="app-com-1">
+    <div>
+        <input type="button" @click="onCountClick" value="count++">
+        <app-com-2 :count2="count"></app-com-2>
+    </div>
+</script>
+<script type="text/x-template" id="app-com-2">
+    <div>
+        <p>count: {{count2}}</p>
+    </div>
+</script>
+<script type="text/x-template" id="app2-com-1">
+    <div>
+        <input type="button" @click="onCountClick" value="count++">
+    </div>
+</script>
+<script type="text/x-template" id="app2-com-2">
+<div>
+    <p>count: {{count}}</p>
+</div>
+</script>
+<script type="text/x-template" id="app3-com-1">
+    <div>
+        <input type="button" @click="onCountClick" value="count++">
+    </div>
+</script>
+<script type="text/x-template" id="app3-com-2">
+    <div><p>count: {{shareState.count}}</p></div>
+</script>
+<script type="text/x-template" id="app4-com-1">
+    <div>
+        <input type="button" @click="onCountClick" value="count++">
+    </div>
+</script>
+<script type="text/x-template" id="app4-com-2">
+    <div><p>count: {{$store.state.count}}</p></div>
+</script>
+
+<script src="assets/js/vue-2.5.17.js"></script>
+<script src="assets/js/vuex-3.1.0.js"></script>
+<script src="assets/js/jquery-3.3.1.js"></script>
+<script src='js/common.js'></script>
+<script src='js/07_vuex.js'></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

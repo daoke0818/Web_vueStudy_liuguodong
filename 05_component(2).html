@@ -40,7 +40,7 @@
     <section id="app3">
         <h3>插槽演示-Blog</h3>
         <app3-main-view>
-            <h3 slot="title">{{blogData.title}}</h3>
+            <h4 slot="title">{{blogData.title}}</h4>
             <span slot="time">{{blogData.time}}</span>
             <div>
                 <p>{{blogData.desc}}</p>
@@ -75,7 +75,7 @@
 </script>
 <script type="text/x-template" id="app-desc-view">
     <div>
-        <h3>{{pushSubDescObj.title}}</h3>
+        <h4>{{pushSubDescObj.title}}</h4>
         <div :style="{'font-size':fontSize + 'px'}">这是{{pushSubDescObj.desc}}的描述信息</div>
     </div>
 </script>
