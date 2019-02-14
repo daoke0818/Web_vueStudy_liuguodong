@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>第八篇 webpack</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
+    <link rel="stylesheet" href="../css/common.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>第八篇 webpack</h1>
+
+    <section id="app">
+        <h3>首要条件——模块化写法</h3>
+        <app-com-1></app-com-1>
+        <ul class="mySummary">
+            <li>请观察控制台，采用模块化写法，在a中调用b</li>
+        </ul>
+    </section>
+    <section id="app2">
+        <h3>用webpack打包</h3>
+        <ul class="mySummary">
+            <li>步骤：
+                <ul>
+                    <li>安装NodeJs，然后再安装webpack和webpack-cli（在3.x之前只需安装前者）</li>
+                    <li>打包配置文件webpack.config.js需要放在项目根目录下，跟node_modules平级，里面存放配置信息</li>
+                    <li>配置好后在根目录下直接运行<code>webpack</code>即可</li>
+                </ul>
+            </li>
+            <li class="text-danger">发现需要webpack安装成全局，再把这两者都安装成本地的才能运行，不知原因</li>
+            <li>配置的output中文件名后缀加不加<code>.js</code>生成的代码不一样！路径中<code>__dirname</code>代表当前路径</li>
+        </ul>
+    </section>
+    <section id="app3">
+        <h3>webpack配置中的loader</h3>
+        <p class="app3Test"></p>
+    </section>
+</div>
+<script src="../assets/js/vue-2.5.17.js"></script>
+<script src="../assets/js/vuex-3.1.0.js"></script>
+<script src="../assets/js/jquery-3.3.1.js"></script>
+<script src='../js/common.js'></script>
+<script src='../webpack/08_webpack_a.js' type="module"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
