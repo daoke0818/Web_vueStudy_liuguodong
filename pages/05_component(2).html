@@ -58,6 +58,7 @@
         <button class="btn btn-sm btn-primary" @click="onChangeComponentClick('C')">加载C模板</button>
         <keep-alive><component :is="componentId">这里加载内容。。。</component></keep-alive>
         <ul class="mySummary">
+            <li>先用<code>&lt;component&gt;</code>标签占位后，通过给属性is绑定一个包含template内容的对象来决定这里显示哪个组件。</li>
             <li class="text-danger">用<code>&lt;keep-alive&gt;</code>包住<code>&lt;component&gt;</code>组件后，控制台的提示仍然在</li>
         </ul>
     </section>

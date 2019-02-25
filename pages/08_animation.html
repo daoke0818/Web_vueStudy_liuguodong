@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="renderer" content="webkit">
+	<title>第八篇 动画</title>
+	<link rel="stylesheet" href="../assets/css/bootstrap.css">
+	<link rel="stylesheet" href="../css/common.css">
+	<style>
+		#app p,
+		#app2 p,
+		#app3 p {
+			width: 350px;
+			height: 150px;
+			line-height: 150px;
+			text-align: center;
+			background-color: deepskyblue;
+			margin: 16px auto;
+		}
+		
+		.anim-1-enter {
+			opacity: 0;
+			transform: translate(100px);
+		}
+		
+		.anim-1-enter-active {
+			transition: all 1s ease;
+		}
+		
+		.anim-1-leave-to {
+			opacity: 0;
+			transform: translate(100px);
+		}
+		
+		.anim-1-leave-active {
+			transition: all 1s ease;
+		}
+		
+		.anim-2-enter-active {
+			animation: bounce-in 1s ease;
+		}
+		
+		.anim-2-leave-active {
+			animation: bounce-in 1s ease reverse;
+		}
+		
+		@keyframes bounce-in {
+			0% {
+				transform: scale(0);
+			}
+			50% {
+				transform: scale(1.5);
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+		
+		.app2-anim-enter-myClass {
+			opacity: 0;
+			transform: translate(-500px);
+		}
+		
+		.app2-anim-enter-active-myClass {
+			transition: all .5s;
+		}
+		
+		.app2-anim-enter-to-myClass {
+			transform: translate(100px);
+		}
+		
+		.app2-anim-leave-to-myClass {
+			opacity: 0;
+			transform: translate(500px);
+		}
+		
+		.app2-anim-leave-active-myClass {
+			transition: all linear .3s;
+		}
+	</style>
+	<script src="../assets/js/velocity-2.0.5.min.js"></script>
+	
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>-->
+
+</head>
+<body>
+
+<div class="container">
+	<h1>第八篇 动画</h1>
+	
+	<section id="app">
+		<h3>使用过渡类名实现的过渡和动画</h3>
+		<div>
+			<button @click="show = !show">测试动画</button>
+		</div>
+		<transition name="anim-1"><p v-if="show">v-if动画1</p></transition>
+		<transition name="anim-2"><p v-show="show">v-show动画2</p></transition>
+		<ul class="mySummary">
+			<li>动画被触发的条件：
+				<ul>
+					<li>v-if</li>
+					<li>v-show</li>
+					<li>动态组件</li>
+					<li>组件根节点</li>
+				</ul>
+			</li>
+			<li>使用方法：
+				<ul>
+					<li>用<code>&lt;transition&gt;</code>标签包住要实现动画的元素</li>
+					<li>提供<code>name</code>属性</li>
+					<li>定义css的各种动画状态，class名称是<code>name</code>拼接上<code>-enter</code>，<code>-enter-active</code>，<code>-leave-to</code>，<code>-leave-active</code>，<code>-enter-to</code>，<code>-leave</code>，其中后两者可选。
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+	<section id="app2">
+		<h3>自定义过渡的类名</h3>
+		<div>
+			<button @click="show = !show">测试动画</button>
+		</div>
+		<transition enter-class="app2-anim-enter-myClass" enter-active-class="app2-anim-enter-active-myClass"
+		            enter-to-class="app2-anim-enter-to-myClass" leave-to-class="app2-anim-leave-to-myClass"
+		            leave-active-class="app2-anim-leave-active-myClass">
+			<p v-if="show">v-if动画1</p></transition>
+		<ul class="mySummary">
+			<li>给<code>&lt;transition&gt;</code>中加入以上6种状态名字和<code>-class</code>拼起来的特性（标签的属性以后称呼为特性），值为自定义的类名</li>
+			<li>自定义过渡类名，可以很好的跟第三方动画库配合，指定要使用的现成动画</li>
+		</ul>
+	</section>
+	<section id="app3">
+		<h3>动画钩子函数</h3>
+		<div>
+			<button @click="show = !show">测试动画</button>
+		</div>
+		<transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter"                          @enter-cancelled="enterCancelled"  @before-leave="beforeLeave" @leave="leave" @after-leave="afterLeave"                          @leave-cancelled="leaveCancelled">
+			<p v-show='show'>钩子函数控制的动画</p>
+		</transition>
+		<ul class="mySummary">
+			<li>demo中使用了Velocity动画库，第一个参数是元素，第二个参数是对象表示动画最终状态，第三个参数也是对象为附加选项</li>
+			<li><code>before-enter</code>：进入前，<code>enter</code>：进入中，<code>after-enter</code>：进入后，<code>enter-cancelled</code>：进入动画被取消，<br><code>before-leave</code>：离开前，<code>leave</code>：离开中，<code>after-leave</code>：离开后，<code>leave-cancelled</code>：离开动画被取消，<br>——这是8种钩子函数
+			</li>
+			<li>动画未结束时再次触发动画，就会调用<code>-cancelled</code>这个钩子。</li>
+			<li class="text-danger">发现当enter中的一些css属性(这里是opacity)如果和之前动画结束时的一样，则不会触发动画，而实际上我可能在before-enter里面已经改变了状态，却被忽略，原因未知。</li>
+		</ul>
+	</section>
+</div>
+
+<script src="../assets/js/vue-2.5.17.js"></script>
+<script src="../assets/js/jquery-3.3.1.js"></script>
+<script src='../js/common.js'></script>
+
+<!--<script src="../assets/js/velocity-2.0.5.min.js"></script>-->
+<script src='../js/08_animation.js'></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
