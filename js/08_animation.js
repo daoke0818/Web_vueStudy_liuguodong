@@ -58,7 +58,24 @@ let app3 = new Vue({
     }
 });
 
-
+let app4 = new Vue({
+    el:'#app4',
+    data:{
+        items:[1,2,3,4,5,6,7,8,9],
+        nextNum:10
+    },
+    methods:{
+        randomIndex(){
+            return Math.floor(Math.random()*this.items.length)
+        },
+        add(){
+            this.items.splice(this.randomIndex(),0,this.nextNum++)
+        },
+        remove(){
+            this.items.splice(this.randomIndex(),1)
+        }
+    }
+})
 
 
 

@@ -78,10 +78,19 @@
 		.app2-anim-leave-active-myClass {
 			transition: all linear .3s;
 		}
+		.list-enter,
+		.list-leave-to{
+			opacity: 0;
+			transform:translateY(2rem);
+		}
+		.list-enter-active,
+		.list-leave-active{
+			transition:all 1s ease;
+		}
 	</style>
-	<script src="../assets/js/velocity-2.0.5.min.js"></script>
+	<!--<script src="../assets/js/velocity-2.0.5.min.js"></script>-->
 	
-	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
 
 </head>
 <body>
@@ -143,6 +152,21 @@
 			</li>
 			<li>动画未结束时再次触发动画，就会调用<code>-cancelled</code>这个钩子。</li>
 			<li class="text-danger">发现当enter中的一些css属性(这里是opacity)如果和之前动画结束时的一样，则不会触发动画，而实际上我可能在before-enter里面已经改变了状态，却被忽略，原因未知。</li>
+			<li>这个动画中离开的过程在最新版velocity-2.0.5中无旋转动画，使用老版本1.2.3可以，但要放在head部分引入</li>
+		</ul>
+	</section>
+	<section id="app4">
+		<h3>列表组动画</h3>
+		<p>
+			<button @click="add">增加</button>
+			<button @click="remove">移除</button>
+		</p>
+
+		<transition-group name="list" class="p-3" tag="p">
+			<span class="d-inline-block list-item border m-2 p-2" v-for="item in items" :key="item">{{item}}</span>
+		</transition-group>
+		<ul class="mySummary">
+			<li>每个条目中必须给特性key绑定不同值。</li>
 		</ul>
 	</section>
 </div>
