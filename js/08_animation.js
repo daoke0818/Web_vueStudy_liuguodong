@@ -75,7 +75,46 @@ let app4 = new Vue({
             this.items.splice(this.randomIndex(),1)
         }
     }
-})
+});
+
+let app5 = new Vue({
+    el:'#app5',
+    data:{
+        show:true
+    }
+});
+
+let app6 = new Vue({
+    el:'#app6',
+    data:{
+        show:true
+    },
+    methods:{
+        enter(el,done){
+            anime({
+                targets:el,
+                rotate:'-1turn',
+                opacity:1,
+                translateX:0,
+                scale:1,
+                complete(){
+                    done()
+                }
+            })
+        },
+        leave(el,done){
+            anime({
+                targets:el,
+                opacity:0,
+                translateX:'250px',
+                scale:2,
+                complete(){
+                    done()
+                }
+            })
+        }
+    }
+});
 
 
 

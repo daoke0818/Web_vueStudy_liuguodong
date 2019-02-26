@@ -6,11 +6,10 @@
 	<meta name="renderer" content="webkit">
 	<title>第八篇 动画</title>
 	<link rel="stylesheet" href="../assets/css/bootstrap.css">
+	<link rel="stylesheet" href="../assets/css/animate-3.7.0.css">
 	<link rel="stylesheet" href="../css/common.css">
 	<style>
-		#app p,
-		#app2 p,
-		#app3 p {
+		p {
 			width: 350px;
 			height: 150px;
 			line-height: 150px;
@@ -157,26 +156,66 @@
 	</section>
 	<section id="app4">
 		<h3>列表组动画</h3>
-		<p>
+		<div class="m-3">
 			<button @click="add">增加</button>
 			<button @click="remove">移除</button>
-		</p>
+		</div>
 
-		<transition-group name="list" class="p-3" tag="p">
+		<transition-group name="list" class="p-3" tag="div">
 			<span class="d-inline-block list-item border m-2 p-2" v-for="item in items" :key="item">{{item}}</span>
 		</transition-group>
 		<ul class="mySummary">
 			<li>每个条目中必须给特性key绑定不同值。</li>
 		</ul>
 	</section>
+	<section id="app5">
+		<h3>和animate.css结合的动画</h3>
+		<div class="m-3">
+			<button @click="show = !show">触发动画</button>
+		</div>
+
+		<transition
+				enter-active-class="animated rollIn"
+				leave-active-class="animated hinge"
+				class="p-3">
+			<p v-if="show">动画一</p>
+		</transition>
+		<transition
+				enter-active-class="animated bounceInDown"
+				leave-active-class="animated bounceOutUp"
+				class="p-3">
+			<p v-show="show">动画二</p>
+		</transition>
+		<transition
+				enter-active-class="animated tada"
+				leave-active-class="animated bounceOutRight"
+				class="p-3">
+			<p v-show="show">动画三</p>
+		</transition>
+		<ul class="mySummary">
+			<li>引入animate.css后，用过渡类名指定使用nimate.css中哪些动画效果</li>
+		</ul>
+	</section>
+	<section id="app6" style="overflow: hidden">
+		<h3>和AnimeJs结合的动画</h3>
+		<div class="m-3">
+			<button @click="show = !show">触发动画</button>
+		</div>
+		<transition @enter="enter" @leave="leave" class="p-3">
+			<p v-show="show">动画一</p>
+		</transition>
+		<ul class="mySummary">
+			<li>使用方法和前面钩子函数中的Velocity类似。</li>
+		</ul>
+	</section>
 </div>
 
+<script src="../assets/js/anime-3.0.1.min.js"></script>
 <script src="../assets/js/vue-2.5.17.js"></script>
 <script src="../assets/js/jquery-3.3.1.js"></script>
 <script src='../js/common.js'></script>
-
-<!--<script src="../assets/js/velocity-2.0.5.min.js"></script>-->
 <script src='../js/08_animation.js'></script>
+
 </body>
 </html>
 
