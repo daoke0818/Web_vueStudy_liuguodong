@@ -24,7 +24,7 @@ body > .container > section {
 
 body > .container > section h3{
     margin-bottom: 1rem;
-    padding: .375rem;
+    padding: .375rem .5rem;
     /*background-color: var(--light);*/
     background-color: #e6e6e6;
 }

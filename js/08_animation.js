@@ -115,7 +115,17 @@ let app6 = new Vue({
         }
     }
 });
-
+let app7 = new Vue({
+    el: '#app7',
+    mounted(){
+        anime({
+            targets:['line','circle','polygon','polyline','path','rect'],
+            strokeDashoffset:[anime.setDashoffset,0],
+            easing: 'easeInOutSine', // 动画运动速度曲线
+            duration:1500
+        })
+    }
+});
 
 
 
