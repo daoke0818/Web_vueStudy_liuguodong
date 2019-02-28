@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="renderer" content="webkit">
+	<title>第九篇 网络请求——axios</title>
+	<link rel="stylesheet" href="../assets/css/bootstrap.css">
+	<link rel="stylesheet" href="../assets/css/animate-3.7.0.css">
+	<link rel="stylesheet" href="../css/common.css">
+</head>
+<body>
+
+<div class="container">
+	<h1>第九篇 网络请求——axios</h1>
+	
+	<section id="app">
+		<h3>使用axios进行标准的ajax请求</h3>
+		<div>
+			<pre>
+	let p = axios.get("../data.json");
+	p.then(res =>{
+		this.data = res;
+	}).catch(function (err) {
+		console.log(err)
+	})
+			</pre>
+		</div>
+		<ul class="mySummary">
+			<li>这就是使用 axios 进行的一个标准的 ajax 请求方式。当使用 axios 进行一个 ajax 请求时，无论是 get、
+				post、put 等，它都会返回一个 Promise 对象，我们通过这个 Promise 对象进行 .then 的链式调用来
+				执行数据请求之后的执行逻辑</li>
+		</ul>
+	</section>
+</div>
+
+<script src="../assets/js/vue-2.5.17.js"></script>
+<script src="../assets/js/jquery-3.3.1.js"></script>
+<script src='../js/common.js'></script>
+<script>
+	let p = axios.get("../data.json");
+	p.then(res =>{
+		this.data = res;
+	}).catch(function (err) {
+		console.log(err)
+	})
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
