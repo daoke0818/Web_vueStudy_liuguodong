@@ -17,14 +17,7 @@
 	<section id="app">
 		<h3>使用axios进行标准的ajax请求</h3>
 		<div>
-			<pre>
-	let p = axios.get("../data.json");
-	p.then(res =>{
-		this.data = res;
-	}).catch(function (err) {
-		console.log(err)
-	})
-			</pre>
+			<pre>{{data}}</pre>
 		</div>
 		<ul class="mySummary">
 			<li>这就是使用 axios 进行的一个标准的 ajax 请求方式。当使用 axios 进行一个 ajax 请求时，无论是 get、
@@ -35,15 +28,25 @@
 </div>
 
 <script src="../assets/js/vue-2.5.17.js"></script>
+<script src="../assets/js/axios-0.18.0.min.js"></script>
 <script src="../assets/js/jquery-3.3.1.js"></script>
 <script src='../js/common.js'></script>
 <script>
-	let p = axios.get("../data.json");
-	p.then(res =>{
-		this.data = res;
-	}).catch(function (err) {
-		console.log(err)
+	let app = new Vue({
+		el:'#app',
+		data:{
+			data:''
+		},
+		mounted(){
+			let p = axios.get("../assets/data/users.json");
+			p.then(res =>{
+				this.data = res;
+			}).catch(function (err) {
+				console.log(err)
+			})
+		}
 	})
+
 </script>
 </body>
 </html>
