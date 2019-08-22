@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function (event) {
-    console.log('DOMContentLoaded:' + new Date().getTime())
+    console.log('DOMContentLoaded事件触发时刻:' + new Date().getTime())
 });
 let app = new Vue({
     el: '#app',
     data: {
         message: 'hello vue!',
-        title: '这里是标题title',
+        title: '这里是vue绑上的标题title',
         src: 'http://p2.music.126.net/dB_Y98VU6CFtXQ_-Bi88pQ==/18680702557664610.jpg?param=150y150',
         alt: '这里将出现图片'
     }
@@ -54,13 +54,25 @@ let app5 = new Vue({
             name: 'objName',
             toString: function () {
                 return 'testObj重写toString'
+            },
+            valueOf:function () {
+                return 'testObj重写valueof'
             }
         },
         testArr: [1, 1, 2, 3, 5, 8],
-        testArr2: [1, 1, 2, 3, 5, 8],
+        testArr2: [],
         testMethod: function () {
             let sum = 1 + 2;
             return '1+2=' + sum;
+        }
+    },
+    created(){
+        this.testArr2 = this.testArr.slice();
+        this.testArr2.toString = function () {
+            return '我把数组干掉了'
+        };
+        this.testArr2.valueOf = function () {
+            return 'testArr2重写valueOf'
         }
     },
     method: {
@@ -114,8 +126,9 @@ let app8 = new Vue({
                 alert(event.target.tagName)
             }
         },
-        onSumClick:function (n1,n2) {
-            alert(n1+n2)
+        onSumClick:function (n1,n2,e) {
+            alert(n1+n2);
+            console.log(e.path.map(item=>item.localName).reverse().join('>'))
         },
         onChange:function () {
             console.log(this.inputMsg)

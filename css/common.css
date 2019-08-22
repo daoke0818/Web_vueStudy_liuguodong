@@ -9,6 +9,9 @@ code{
 pre{
     background: #C7EDCC;
 }
+[v-cloak]{
+    display:none;
+}
 .text-danger *{
     color: #bd2130 !important;
 }

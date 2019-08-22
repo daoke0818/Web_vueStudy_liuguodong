@@ -11,15 +11,16 @@
 <body>
 <div class="container">
     <h1>第一篇 基础语法</h1>
-    <section id="app">
+    <section id="app" v-cloak>
         <h3>声明式渲染</h3>
-        {{message}}
-        {{new Date().getTime()}}<br>
+        {{message}}<br>
+        渲染到这里的时刻：{{new Date().getTime()}},与控制台上打印的DOMContentLoaded事件完成的时间作比较<br>
         <span :title="title">移到我上面查看标题</span><br>
         <img :src="src" :alt="alt">
         <ul class="mySummary">
             <li>采用Mustache的渲染方法：{{ }}
-            <li>vue渲染的时机要比DOMContentLoaded早几毫秒。</li>
+            <li>vue渲染的时机要比DOMContentLoaded早几到几百毫秒。</li>
+            <li>页面显示并不会等到DOMContentLoaded事件之后，所以有时能看到双大括号闪烁，可通过指令<code>v-cloak</code>和样式<code>[v-cloak]{display:none}</code>来解决</li>
         </ul>
     </section>
     <section id="app2">
@@ -35,6 +36,7 @@
         </div>
         <ul class="mySummary">
             <li>v-if在条件不满足时不渲染
+            <li>v-else-if使用条件：前一兄弟元素必须有 v-if 或 v-else-if
             <li>v-show在条件不满足时通过css将元素隐藏
         </ul>
     </section>
@@ -47,7 +49,7 @@
             </li>
         </ul>
         <ul class="mySummary">
-            <li>这里的index作为每条数据的id,在列表更新是，可通过key决定DOM的复用策略</li>
+            <li>这里的index作为每条数据的id绑到属性key上，在列表更新时，可通过key决定DOM的复用策略</li>
             <li>在控制台可以通过<code>app3.items.push({name:'music',price:12})</code>来添加数据，实时显示</li>
         </ul>
     </section>
@@ -80,8 +82,8 @@
             </li>
             <li>Vue检测不到的变化：
                 <ul>
-                    <li>利⽤索引去设置新的数据时：<code>items[indexOfItem] = newItem;</code>
-                    <li>直接修改数组的⻓度时：<code>items.length = newLength;</code>
+                    <li>利用索引去设置新的数据时：<code>items[indexOfItem] = newItem;</code>
+                    <li>直接修改数组的长度时：<code>items.length = newLength;</code>
                     <li>直接去添加或删除对象的属性：<code>app.dataSource.newKey = 'newValue';</code>
                 </ul>
             </li>
@@ -94,10 +96,10 @@
         <p :title="testObj">测试对象(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testObj}}</p>
         <p :title="testObj2">测试的象重写toString(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testObj2}}</p>
         <p :title="testArr">测试数组:{{testArr}}</p>
-        <p :title="testArr2">(<strong class="text-danger">这里不知如何重写</strong>)测试数组重写toString:{{testArr2}}</p>
+        <p :title="testArr2">测试数组重写toString(鼠标移到我上面看title值，跟Mustache渲染出来的不同):{{testArr2}}</p>
         <p :title="testMethod()">测试方法:{{testMethod()}}</p>
         <ul class="mySummary">
-            <li>v-bind支持JavaScript单一表达式，可以绑定数组、对象和函数。其中前两者调用其toString方法，而函数输出其返回值。</li>
+            <li>v-bind支持JavaScript单一表达式，可以绑定数组、对象和函数。其中前两者调用其toString方法，而函数输出其返回值。但要注意到Mustache渲染结果跟toString和valueOf无关</li>
         </ul>
     </section>
     <section id="app6">
@@ -108,10 +110,10 @@
         <div :class="[isRed?'text-danger':'text-success']">我是被<strong>三目运算符</strong>设置的颜色,class中的中括号可以不要</div>
         <div :class="[{'underLine':true},testClassObj]">我是被<strong>数组中嵌套的对象</strong>设置的颜色</div>
         <div style="font-size:1.25rem;" :style="isBlue ? 'color:#007bff' : 'color:red'">
-            我是<strong>直接被style三目运算符表达式</strong>设置的颜色
+            我是<strong>绑定到style属性的三目运算符表达式，结果为字符串</strong>设置的颜色，不会整个覆盖原生的style
         </div>
         <div :style="{color:'#dc3545','font-weight':'bold',fontSize:testFontSize+'px'}">
-            支持对象写法设置的颜色,属性名如果不带引号则需要用驼峰写法，带引号按需使用连字符。属性值可以拼接
+            支持style绑定对象形式的写法，属性名如果不带引号则需要用驼峰写法，带引号按需使用连字符。属性值可以拼接
         </div>
         <div :style="testDisplay">请查看我的style属性——vue只渲染最后一个被浏览器支持的值</div>
     </section>
@@ -127,7 +129,7 @@
         <label class="mr-2" for="checkbox3">人</label>
         <p>复选框的绑定值为：{{testCheckbox}}</p>
         <ul class="mySummary">多选框绑定
-            <li>如果v-model的值为<strong>数组</strong>，则依次绑定对应checkbox的value值，没有value的值为null且会同时动作；选中CheckBox后则自动添加对应value值到数组中。
+            <li>如果v-model的值为<strong>数组</strong>，则依次绑定对应checkbox的value值，没有value值的为null且会同时动作；选中CheckBox后则自动添加对应value值到数组中。
             </li>
             <li>如果v-model的值为<strong>字符串</strong>，则会绑定checked的值，这时有一个发生变化，所有的CheckBox都会同时动作，即是全选按钮效果。</li>
         </ul>
@@ -175,8 +177,8 @@
         <p>直接绑定表达式 counter:{{counter}}</p>
         <button @click="testOnclickMethods">testOnclickMethods</button>
         <p>调用vue中自定义方法</p>
-        <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
-        <p>方法传参</p>
+        <button @click="onSumClick(11,22,$event)">onSumClick(11,22,$event)</button>
+        <p>方法传参,其中$event是原生事件对象，可在控制台中看到当前元素的路径</p>
         <input v-model="inputMsg" @keyup="onChange">
         <p>绑keyup事件 inputMsg：{{inputMsg}}</p>
         <ul class="mySummary">
