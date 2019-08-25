@@ -55,7 +55,7 @@ let app5 = new Vue({
             toString: function () {
                 return 'testObj重写toString'
             },
-            valueOf:function () {
+            valueOf: function () {
                 return 'testObj重写valueof'
             }
         },
@@ -66,7 +66,7 @@ let app5 = new Vue({
             return '1+2=' + sum;
         }
     },
-    created(){
+    created() {
         this.testArr2 = this.testArr.slice();
         this.testArr2.toString = function () {
             return '我把数组干掉了'
@@ -116,26 +116,30 @@ let app7 = new Vue({
 let app8 = new Vue({
     el: '#app8',
     data: {
-        counter:0,
-        inputMsg:''
+        counter: 0,
+        inputMsg: ''
     },
-    methods:{
-        testOnclickMethods:function (event) {
-            alert('Hello VUE!');
-            if(event){
-                alert(event.target.tagName)
+    methods: {
+        testOnclickMethods: function (event) {
+            // alert('button的外层事件触发：Hello VUE!');
+            if (event) {
+                alert('外层获取的事件event.target.tagName：' + event.target.tagName)
             }
         },
-        onSumClick:function (n1,n2,e) {
-            alert(n1+n2);
-            console.log(e.path.map(item=>item.localName).reverse().join('>'))
+        onSumClick: function (n1, n2, e) {
+            alert('参数求和：' + (n1 + n2));
+            if (e) console.log(e.path.map(item => item.localName).reverse().join('>'))
         },
-        onChange:function () {
+        onChange: function () {
             console.log(this.inputMsg)
         },
-		onScroll:function(){
-			alert('滚动条触发的自定义方法')
-		}
+        onScroll: function () {
+            alert('滚动条触发的自定义方法')
+        },
+        myPreventDefault(e) {
+            alert('这个方法调用e.preventDefault()，而控制台会说不能在passive内部执行preventDefault');
+            e.preventDefault();
+        }
     }
 });
 

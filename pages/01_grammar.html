@@ -174,7 +174,9 @@
     <section id="app8">
         <h3>事件绑定</h3>
         <button v-on:click="counter+=1">counter+=1</button>
-        <p>直接绑定表达式 counter:{{counter}}</p>
+        <p>直接绑定表达式 counter:{{counter}}
+        <div class="text-danger">不能绑JS原生方法的语句，比如 v-on:click="alert(0)"，会报错</div>
+        </p>
         <button @click="testOnclickMethods">testOnclickMethods</button>
         <p>调用vue中自定义方法</p>
         <button @click="onSumClick(11,22,$event)">onSumClick(11,22,$event)</button>
@@ -194,7 +196,7 @@
             <button @click.stop="onSumClick(11,22)">onSumClick(11,22)</button>
         </div>
         <p><code>.stop</code>——阻止事件冒泡</p>
-        <a href="http://e-art.top" @click.prevent="onSumClick(11,22)" target="_blank">http://e-art.top</a>
+        <a href="http://e-art.top" @click.prevent="onSumClick(11,22)" target="_blank">http://e-art.top?这个链接绑定到求和方法上</a>
         <p><code>.prevent</code>——阻止默认事件（光弹出不跳转）</p>
         <div class="p-3 border" @click.capture="testOnclickMethods">testOnclickMethods
             <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
@@ -207,29 +209,42 @@
         <div class="p-3 border" @click.once="testOnclickMethods">testOnclickMethods
             <button @click="onSumClick(11,22)">onSumClick(11,22)</button>
         </div>
-        <p><code>.once</code>——事件触发一次后就被删除（包括被冒泡）</p>
-        <div id="#testScroll" @scroll.passive="onScroll" style='height:5rem;overflow: scroll;' class="p-3 border">
+        <p><code>.once</code>——事件触发一次后就被删除（修饰符绑在外层，包括被冒泡，可测试）</p>
+        <div id="#testScroll" @scroll.passive="myPreventDefault" style='height:5rem;overflow: scroll;' class="p-3 border">
             <div class='border' style="height:8rem;">滚动我试试？
                 <div class='text-danger'>感受不够深刻</div>
+                <p>1~<br><br>
+                <p>2~<br><br>
+                <p>3~<br><br>
             </div>
         </div>
-        <p><code>.passive</code>——恢复浏览器事件默认行为（如立即触发滚动，因为scroll事件中默认浏览器先处理事件再滚动），不能和prevent一起用，因为后者会被忽略。</p>
+        <p><code>.passive</code>——恢复浏览器事件默认行为，每次事件产生，浏览器都会去查询一下是否有preventDefault阻止该次事件的默认动作。
+            我们加上passive就是为了告诉浏览器，不用查询了，我们没用preventDefault阻止默认动作。一般用在滚动监听，@scoll，@touchmove 。
+            因为滚动监听过程中，移动每个像素都会产生一次事件，每次都使用内核线程查询prevent会使滑动卡顿。我们通过passive将内核线程查询跳过，可以大大提升滑动的流畅度。
+            注意不能和prevent一起用，因为后者会被忽略。</p>
+<!--
         <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
             <a href="http://e-art.top" @click.prevent.self="onSumClick(11,22)" target="_blank">http://e-art.top
                 <button @click="onSumClick(1, 2)">onSumClick</button>
             </a>
         </div>
-        <p><code>.prevent.self</code>——阻止了a的所有事件</p>
+-->
         <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
-            <a href="http://e-art.top" @click.self.prevent="onSumClick(11,22)" target="_blank">http://e-art.top
-                <button @click="onSumClick(1, 2)">onSumClick</button>
+            <a href="http://e-art.top" @click.prevent.self="onSumClick(11,22)" target="_blank">http://e-art.top
+                <button @click="onSumClick(1, 2)">onSumClick(1, 2)</button>
             </a>
         </div>
-        <p><code>.self.prevent</code>——只阻止了a的点击事件，而通过捕获或冒泡来的事件会触发默认动作</p>
+        <p><code>.prevent.self</code>——阻止了传播a的默认行为和事件，可以理解为先阻止默认跳转后再过滤掉传播来的。</p>
+        <div class="p-3 border" @click="testOnclickMethods">testOnclickMethods
+            <a href="http://e-art.top" @click.self.prevent="onSumClick(11,22)" target="_blank">http://e-art.top
+                <button @click="onSumClick(1, 2)">onSumClick(1, 2)</button>
+            </a>
+        </div>
+        <p><code>.self.prevent</code>——只阻止了a的点击事件，可以理解为把自身（self）的默认行为（prevent）阻止，而通过传播来的事件会触发默认动作跳转。</p>
         <ul class="mySummary">
-            <li class="text-danger">可以这样理解，对于a标签，事件触发有3种行为：浏览器默认+自身触发+捕获或冒泡触发；<br>
-                .prevent.self在前相当于先阻止默认行为，再过滤掉捕获冒泡行为；<br>
-                .self.prevent相当于先过滤出来自身的行为，再进行阻止默认行为，而对捕获冒泡来触发的默认事件没有阻止。
+            <li class="text-danger">可以这样理解，对于a标签，事件触发有3种行为：浏览器默认(跳转)+自身触发+捕获或冒泡触发；<br>
+                .prevent.self相当于先阻止默认行为，再过滤掉捕获冒泡行为；<br>
+                .self.prevent相当于先过滤出来自身的行为，再阻止其中默认行为，而对捕获冒泡传播来的默认行为没有阻止。
             </li>
         </ul>
 
