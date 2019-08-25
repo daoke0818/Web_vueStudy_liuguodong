@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>第十一篇 生命周期</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
+    <link rel="stylesheet" href="../css/common.css">
+</head>
+<body>
+<div class="container">
+    <h1>第十一篇 生命周期</h1>
+    <section id="app">
+        <h3>截止本教程发布，vue声明周期函数有11个</h3>
+        <h4>beforeCreate</h4>
+        <p>创建前，实例已经创建完，事件和生命周期已完全初始化，但还无法获取实例中的数据</p>
+        <h4>created</h4>
+        <p>创建后，数据已经注入，可以访问数据</p>
+        <h4>beforeMount</h4>
+        <p>挂载前，相关render方法已被调用</p>
+        <h4>mounted</h4>
+        <p>挂载后，页面的el已经被创建的vm.$el替换，页面渲染完。但此方法不承诺所有子元素都被挂载完，如果需要，可以使用vm.nextTick</p>
+        <h4>beforeUpdate</h4>
+        <p>更新前，适合处理DOM更新前的事件，如手动解除已添加的监听事件</p>
+        <h4>updated</h4>
+        <p>更新后，由数据变动引起的DOM已更新完毕，适合依赖DOM的操作。这时最好不要直接更改状态，如果需要可使用watcher或计算属性</p>
+        <ul class="mySummary">
+            <li>
+        </ul>
+    </section>
+</div>
+
+<script src="../assets/js/jquery-3.3.1.js"></script>
+<script src="../assets/js/vue-2.5.17.js"></script>
+<script src='../js/01_grammar.js'></script>
+<script src='../js/common.js'></script>
+</body>
+</html>
