@@ -7,6 +7,12 @@
     <title>第三篇 常用的api</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../css/common.css">
+    <style>
+        #app4 p{
+            /*css隐藏的元素不能用v-show显示出来*/
+            /*display: none;*/
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -14,7 +20,7 @@
     <section id="app">
         <h3>set添加数量属性</h3>
         <ul>
-            <li v-for="(book,index) in books">
+            <li v-for="(book,index) in books" class="my-2">
                 <span class="mr-3">《{{book.name}}》</span>
                 <span class="mr-3">{{book.price.toFixed(2)}}元/本</span>
                 <span class="mr-3">{{book.number}}本</span>
@@ -40,7 +46,7 @@
     </section>
     <section id="app3">
         <h3>filter过滤器(局部)以及传参</h3>
-        <p>车牌号为：<strong>鲁B {{plateNum | upperCaseFilter|substringFilter(5)}}</strong></p>
+        <p>车牌号为：<strong>鲁B {{plateNum | upperCaseFilter|substringFilter(6)}}</strong></p>
         <p>请输入车牌号： <input v-model="plateNum"></p>
     </section>
     <ul class="mySummary">
@@ -50,7 +56,7 @@
     <section id="app4">
         <h3>directive自定义指令（模拟v-show）</h3>
         <label><input type="checkbox" checked v-model="isShow"> 测试下面文本的显示</label>
-        <p v-myShow="isShow">hello！</p>
+        <p v-show="isShow">hello！</p>
         <ul class="mySummary">
             <li>filter创建时后面是个方法，而directive后面是个对象</li>
             <li>这个对象的属性具有如下钩子函数(什么时候起作用)：
@@ -80,14 +86,17 @@
                 </ul>
             </li>
             <li class="text-danger">HTML中v-后面的指令会被转成小写，所以定义的时候写成大写就找不到了！</li>
-            <li class="text-danger">如果一开始就不显示，isShow为true之后却能显示？</li>
+            <li class="text-danger">如果一开始就不显示，isShow为true之后也不能显示，因为书上这段代码的逻辑是：绑定值为true时，元素恢复原来的显示状态，为false时元素隐藏。</li>
+            <li class="text-danger">经测试，上一条的问题在vue自带的指令v-show中也如此，不能把css隐藏的元素显示出来。</li>
         </ul>
     </section>
     <section id="app5">
         <h3>nextTick下次DOM更新后的回调</h3>
         <p id="app5_msg" class="p-2 badge-info" v-HTML="text"></p>
+        {{tip}}
         <ul class="mySummary">
-            <li>alert如果不写在nextTick内，将无法获取加载后的高度，页面渲染时异步更新的，获取高度时页面可能还没加载完</li>
+            <li>$nextTick的执行时机是下次DOM更新后，不管现在是正在更新还是尚未更新。</li>
+            <li>在created创建后的周期函数里获取不到高度和文本内容，因为页面渲染是异步更新的，获取时页面可能还没加载完。</li>
             <li>实例中采用局部定义方式<code>this.$nextTick(() => {
                 alert('文本高度为：'+msgDom.offsetHeight+'px');
                 })</code>，可以用全局的<code>Vue.nextTick( [callback, context] )</code>，其中第二个参数默认指向window，可以更改</li>

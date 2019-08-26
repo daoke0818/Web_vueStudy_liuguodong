@@ -2,9 +2,10 @@
     list-style: cjk-earthly-branch;
 }
 code{
+    margin: 0 .125rem;
+    padding: 0 .25rem;
     color: initial;
     background: #C7EDCC;
-    padding: 0 .25rem;
 }
 pre{
     background: #C7EDCC;

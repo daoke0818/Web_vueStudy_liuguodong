@@ -17,9 +17,9 @@ let app = new Vue({
     created() {
         setTimeout(() => {
             this.books = [
-                {name: 'javaScript', price: 35},
-                {name: '设计模式之禅', price: 21},
-                {name: '编程大法', price: 10},
+                {name: '乱时候穷时候', price: 35},
+                {name: '甘蔗芽苦菜花', price: 21},
+                {name: '姜淑梅自传', price: 10},
             ];
             this.books.forEach(book => {
                 // book.number = 1; // 这种写法不能响应
@@ -71,13 +71,14 @@ Vue.directive('myshow', {
 let app4 = new Vue({
     el: '#app4',
     data: {
-        isShow: false
+        isShow: true
     }
 });
 let app5 = new Vue({
     el: '#app5',
     data: {
-        text: ''
+        text: '',
+        tip:''
     },
     created() {
         this.text = '加载中。。。';
@@ -86,7 +87,7 @@ let app5 = new Vue({
             let msgDom = document.getElementById('app5_msg');
             // alert('文本高度为：'+msgDom.offsetHeight+'px');
             this.$nextTick(() => {
-                alert('文本高度为：'+msgDom.offsetHeight+'px');
+                this.tip = '$nextTick触发，文本高度为：'+msgDom.offsetHeight+'px';
             })
         }, 1000)
     }

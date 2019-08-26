@@ -19,10 +19,10 @@
     <section id="app2">
         <h3>method方法</h3>
         <ul>
-            <li v-for="(book,index) in books">
+            <li v-for="(book,index) in books" class="my-2">
                 <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
                 <button class="mr-2" @click="book.number++">+</button>
-                <button @click="book.number--">-</button>
+                <button @click="book.number--"> - </button>
             </li>
         </ul>
         <p>总价：{{totalPrice()}}</p>
@@ -31,14 +31,14 @@
             ：{{testCounter}}
         </p>
         <ul class="mySummary">
-            <li>结论，只要dom中有改变，<code>总价：{ {totalPrice()} }</code>里面的方法会被调用，价格就要重新计算一遍。如果计算过程复杂就会有性能问题。</li>
-            <li><span class="text-danger">问题vue局部更新时，从<code>&#123; &#123;testCounter&#125; &#125;</code>到<code>总价：{ {totalPrice()} }</code>的范围如何界定？还是更新本组件内的dom?</span></li>
+            <li>结论，按钮点击更新后面的数字时，会导致这个组件(#app2)的视图更新，从而引发DOM中的<code>总价：{ {totalPrice()} }</code>重新渲染，里面的方法会被调用，价格就要重新计算一遍。如果计算过程复杂就会有性能问题。</li>
+            <li>视图更新依赖DOM上的数据变化，数据不变视图不会更新的。
         </ul>
     </section>
     <section id="app3">
         <h3>watch属性</h3>
         <ul>
-            <li v-for="(book,index) in books">
+            <li v-for="(book,index) in books" class="my-2">
                 <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
                 <button class="mr-2" @click="book.number++">+</button>
                 <button @click="book.number--">-</button>
@@ -50,13 +50,14 @@
             ：{{testCounter}}
         </p>
         <ul class="mySummary">
-            <li>books写到watch里面，totalPrice就不会被更新dom时重新调用。</li>
+            <li>要监测的目标books写到watch里面，totalPrice就不会被更新dom时调用，而只有books发生变化时才调用。</li>
+            <li>本例中页面加载完后总价格是0，因为此时books没有变动就没有计算，解决方法就是在watch之外(如创建完的钩子函数中)调用。</li>
         </ul>
     </section>
     <section id="app4">
         <h3>watch属性异步请求</h3>
         <ul>
-            <li v-for="(book,index) in books">
+            <li v-for="(book,index) in books" class="my-2">
                 <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
                 <button class="mr-2" @click="book.number++">+</button>
                 <button @click="book.number--">-</button>
@@ -85,14 +86,11 @@
             <label for="lastName2">lastName2:</label><input id="lastName2" v-model="lastName">
         </p>
         <p>全名：{{fullName}}</p>
-        <ul class="mySummary">
-            <li><span class="text-danger">后台报错：<code>[Vue warn]: Computed property "fullName" was assigned to but it has no setter.</code></span> </li>
-        </ul>
     </section>
     <section id="app7">
         <h3>computed属性实现购物车</h3>
         <ul>
-            <li v-for="(book,index) in books">
+            <li v-for="(book,index) in books" class="my-2">
                 <span class="mr-3">《{{book.name}}》</span><span class="mr-3">{{book.number}}本</span><span class="mr-3">{{book.price}}元/本</span>
                 <button class="mr-2" @click="book.number++">+</button>
                 <button @click="book.number--">-</button>
@@ -101,12 +99,13 @@
         <p>总价：{{totalPrice}}</p>
 
         <ul class="mySummary">
+            <li>把某个变量计算的依赖逻辑作为方法写到computed里面，方法返回计算结果，这样只有方法里的变量有变化时才会计算一次，</li>
             <li>计算属性必须是一个带返回值的方法。</li>
         </ul>
     </section>
     <section id="app8">
         <h3>computed属性的get和set方法</h3>
-        <label for="setName">设置名字:</label> <input id="setName" @blur='setName'>
+        <label for="setName">设置名字:</label> <input id="setName" v-model="inputModel">
         <p>全名：{{fullName}}</p>
         <ul class="mySummary">
             <li>这里取被多个空格分隔的第一个和最后一个拼成全名</li>
@@ -115,12 +114,13 @@
     <section id="app9">
         <h3>computed属性的缓存</h3>
         <p>computed的date: {{date1}}</p>
-        <p>methods的date: {{date2()}}</p>
-        <!--<h4>888毫秒之后: </h4>-->
-        <!--<p>computed的date: {{newDate1}}</p>-->
-        <!--<p>methods的date: {{newDate2}}</p>-->
+        <p v-once>methods的date: {{date2()}}</p>
+        <button @click="getValue">现在取值</button>
+        <label @click="getValue"><input type="checkbox" v-model="cache"/>取消缓存</label>
+        <p>computed的date: {{newDate1}}</p>
+        <p>methods的date: {{newDate2}}</p>
         <ul class="mySummary">
-            <li>查看控制台，可以发现computed属性读的是缓存值而不会随时间变化，这个缓存机制可以取消：
+            <li>可以发现computed属性读的是缓存值而不会随时间变化，这个缓存机制可以取消：
                 <pre class="text-danger">
                     date1: {
                         cache: false,
@@ -130,14 +130,17 @@
                     }
                 </pre>
             </li>
-            <li>控制台上的输出不能写到网页上，因为这样会触发页面渲染，导致<code>data2()</code>重新调用</li>
+            <li class="text-danger">问题：点选取消缓存可以改变如上cache的值，但却不能生效，猜想是实例初始化后cache不再响应值的变化。而且发发现cache在初始化时取到的复选框值为undefined。</li>
+            <li>因为DOM更新会导致methods的date重新调用，所以在第一次加载时用了v-once指令，意思是只加载一遍后就会冻结。</li>
         </ul>
     </section>
-    <ol>总结：
+    <h3>总结</h3>
+    <ol>
         <li>javaScript表达式，适用于简单计算。</li>
         <li>methods方法，适用于复杂计算，但页面的重新渲染会导致方法重新调用而影响性能。</li>
         <li>watch属性，比起methods属性，可以为特定目标的变动而调用特定方法，有异步功能，但目标有多个时更适合用computed属性。</li>
-        <li>computed属性，可以为多个依赖的目标设定被调函数，还有缓存机制，有get/set方法。</li>
+        <li>computed属性，可以为多个依赖的目标设定被调函数，还有缓存机制，有get/set方法，官方比较推荐。</li>
+        <li>不同场景应用不同方法，不能一概而论。</li>
     </ol>
 </div>
 

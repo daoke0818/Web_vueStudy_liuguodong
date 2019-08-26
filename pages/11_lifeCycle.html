@@ -12,7 +12,8 @@
 <div class="container">
     <h1>第十一篇 生命周期</h1>
     <section id="app">
-        <h3>截止本教程发布，vue声明周期函数有11个</h3>
+        <h3>各生命周期函数</h3>
+        <p>截止本教程发布，vue生命周期函数有11个</p>
         <h4>beforeCreate</h4>
         <p>创建前，实例已经创建完，事件和生命周期已完全初始化，但还无法获取实例中的数据</p>
         <h4>created</h4>
@@ -25,8 +26,28 @@
         <p>更新前，适合处理DOM更新前的事件，如手动解除已添加的监听事件</p>
         <h4>updated</h4>
         <p>更新后，由数据变动引起的DOM已更新完毕，适合依赖DOM的操作。这时最好不要直接更改状态，如果需要可使用watcher或计算属性</p>
+        <h4>activated</h4>
+        <p>keep-alive组件激活时调用</p>
+        <h4>deactivated</h4>
+        <p>keep-alive组件停用时调用</p>
+        <h4>beforeDestroy</h4>
+        <p>销毁前，实例仍然可用</p>
+        <h4>destroyed</h4>
+        <p>销毁后，Vue实例解除绑定，移除监听器，然后销毁，不能再用</p>
+        <h4>errorCaptured</h4>
+        <p>错误捕获，当子孙组件发生错误时调用，三个参数分别为错误对象，错误对象的组件，描述错误信息来源的字符串。如果返回false则阻止错误向上传播。</p>
+        <h3>Vue的声明</h3>
+        <pre>
+        function Vue (options) {
+          if (process.env.NODE_ENV !== 'production' &&!(this instanceof Vue ) {
+            warn('Vue is a constructor and should be called with the `new` keyword')
+          }
+          this._init(options)
+        }
+        </pre>
         <ul class="mySummary">
-            <li>
+            <li>可以看到：Vue 是一个方法，是一个使用 Function 来实现的构造函数，所以只能通过 new 的方式来创建Vue 的实例，
+            然后通过 Vue 实例的 _init 方法来进行 Vue 的初始化。
         </ul>
     </section>
 </div>
