@@ -56,7 +56,7 @@ const app2 = new Vue({
         },
         toPathClick:function () {
             this.$router.push({
-                path:'/user/Black?id=MaDan',
+                path:'/user/Black?name=MaDan',
                 query:{
                     weight:3.6
                 }

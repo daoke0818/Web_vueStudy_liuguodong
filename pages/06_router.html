@@ -23,8 +23,8 @@
         <ul class="mySummary">
             <li><code>&lt;router-link&gt;</code>会被渲染成<code>&lt;a&gt;</code>标签，其中to属性指向路由中要跳转的路径</li>
             <li><code>&lt;router-view&gt;</code>指定通过路由渲染完并显示的页面位置</li>
-            <li>路由们是个数组，每个路由是个对象，其中path是路径；component是含template模板的对象；也可以有name属性配合跳转</li>
-            <li>这些路由们被<code>VueRouter</code>初始化成一个router，然后在<code>Vue</code>初始化时配置进去即可使用</li>
+            <li>路由们是个数组，每个路由是个对象，其中path是路径；component是生成组件的对象；也可以有name属性配合跳转</li>
+            <li>这些路由们被<code>VueRouter</code>初始化成一个router，然后在<code>Vue</code>初始化时配置(注册)进去即可使用</li>
         </ul>
     </section>
     <section id="app2">
@@ -38,10 +38,11 @@
         <router-view></router-view>
         <ul class="mySummary">
             <li>在 Vue 实例内部，你可以通过 <code>$router</code> 访问路由实例</li>
-            <li><code>router.push</code> 方法可以让路由导航到不同的 URL</li>
+            <li><code>router.push</code> 方法可以让触发路由动作，导航到不同的 URL</li>
             <li>除了<code>path</code>，还可以用<code>name</code>来指定路由的跳转目标</li>
-            <li>动态路由初始化是要配置 <code>mode: 'history' </code>，但这样可能会引起地址栏路径的变化，请观察</li>
-            <li>动态路由中传入的参数被对应的带冒号的属性接收后，存放在<code>$router.params</code>中，如果有查询参数（即问号后面带的参数）则放在<code>$router.query</code>中</li>
+            <li>动态路由在Vue实例初始化时要配置 <code>mode: 'history' </code>，但这样可能会引起地址栏路径的变化，请观察</li>
+            <li>动态路由中传入的参数被对应的带冒号的属性接收后，存放在<code>$router.params</code>中，如果有查询参数（即问号后面带的参数）则放在<code>$router.query</code>中。
+                查询参数也可以在push时通过<code>query</code>属性来传入</li>
         </ul>
     </section>
     <section id="app3">
