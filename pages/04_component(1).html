@@ -76,22 +76,16 @@
                     <li>子组件模板里可能使用的地方</li>
                 </ul>
             </li>
-            <li>直接修改子组件的属性会在控制台收到警告，也不会影响到父组件的对应值（<span class="text-danger">如何验证？</span>），因为Prop属性具有“单向下行绑定的特性”</li>
-            <li>如果要改变Prop，有以下2个方法：
-                <ul>
-                    <li>把属性写入data里，</li>
-                </ul>
-            </li>
+            <li>直接修改子组件的属性时，父组件的对应值的值不会被改变，而且会在控制台会报错，因为Prop属性具有“单向下行绑定的特性”</li>
         </ul>
     </section>
     <section id="app7">
-        <h3>父子同时修改子组件的prop(watch)</h3>
+        <h3>父子同时修改子组件的prop(data)</h3>
         <p>
             <app7-main-view></app7-main-view>
         </p>
         <ul class="mySummary">
-            <li>如果需要父组件和子组件都能改从父组件接过来的参数，做法是在子组件新建一个变量，用来接收父参数，子组件中使用这个变量</li>
-            <li>直接按上述写法会发现父组件传参不能触发子组件更新，解决方法是写一个watch属性，观察prop中的父参数，随时改到子参数中</li>
+            <li>如果要改变传到子组件的值，可以新建子组件data变量，通过watch让父组件传过来的值赋值进来即可</li>
         </ul>
     </section>
     <section id="app8">
@@ -100,7 +94,7 @@
             <app8-main-view></app8-main-view>
         </p>
         <ul class="mySummary">
-            <li class="text-danger">这个写法没有成功，修改本地computed属性时报错，书上源代码只是用一个本地的computed接了出去，并无其他动作</li>
+            <li>如果需要对接收到的数据进行二次计算，比如全部转成大写，可以用计算属性</li>
         </ul>
     </section>
     <section id="app9">
@@ -157,6 +151,7 @@
             <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Android')">安卓</button>
             <button class="btn btn-sm btn-primary" @click="onChangeDescClick('Apple')">苹果</button>
             <button class="btn btn-sm btn-primary" @click="onChangeDescClick('JavaScript')">Vue</button>
+            父组件的desc:{{desc}}
         </p>
         <app6-desc-view :pushSubDesc="desc"></app6-desc-view>
     </div>

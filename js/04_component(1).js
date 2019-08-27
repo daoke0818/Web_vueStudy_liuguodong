@@ -143,7 +143,7 @@ Vue.component('app8-main-view', {
     template: '#app8-main-view',
     data: function () {
         return {
-            desc: '描述信息：'
+            desc: '默认描述信息'
         }
     },
     methods: {
@@ -153,8 +153,7 @@ Vue.component('app8-main-view', {
     }
 });
 Vue.component('app8-desc-view', {
-    template: '<p>这是 {{subDesc}} 系统<br>' +
-        '<button class="btn btn-sm btn-primary" @click="tryChangeSubProps">修改子组件参数为windows</button></p>',
+    template: '<p>这是 {{subDesc}} 系统<br></p>',
     props: {
         pushSubDesc: ''
     },
@@ -164,27 +163,11 @@ Vue.component('app8-desc-view', {
     computed: {
         subDesc: {
             get: function () {
-                return this.pushSubDesc;
+                return this.pushSubDesc.toLocaleUpperCase();
             },
-            set: function (val) {
-                this.temp = val;
-            }
-        },
-        temp:{
-            get: function () {
-                return this.pushSubDesc;
-            },
-            set: function (val) {
-                this.subDesc = val;
-            }
         },
 
     },
-    methods: {
-        tryChangeSubProps: function () {
-            this.subDesc = 'windows'
-        }
-    }
 });
 let app8 = new Vue({
     el: '#app8'
@@ -194,7 +177,7 @@ Vue.component('app9-main-view', {
     template: '#app9-main-view',
     data: function () {
         return {
-            // 这里写成undefined可以保证不向子组件传递参数，会展示子组件默认值
+            // 这里写成undefined可以保证初始化时不向子组件传递参数，会展示子组件默认值
             descObj: undefined
         }
     },

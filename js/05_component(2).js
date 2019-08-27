@@ -77,20 +77,55 @@ let app4ComponentC = {
 };
 let app4 = new Vue({
     el: '#app4',
-    data:function(){
-        return{
-            componentId:app4ComponentA
+    data: function () {
+        return {
+            componentId: app4ComponentA
         }
     },
     methods: {
-        onChangeComponentClick: function (name) {
-            console.log(name)
+        onChangeComponentClick(name) {
             this.componentId = eval('app4Component' + name)
-
         }
     }
 });
-
+const app5Res = {
+    template: "#app5Res"
+};
+const app5Rej = {
+    template: "#app5Rej"
+};
+const promiseParam = function (resolve, reject) {
+    const t = Math.random() * 2;
+    setTimeout(() => {
+        console.log(t)
+        if (t < 1) {
+            resolve(app5Res)
+        } else {
+            reject("请求失败……")
+        }
+    }, t * 1000)
+};
+Vue.component('async-component', promiseParam);
+const promise = new Promise(promiseParam);
+const app5 = new Vue({
+    el: '#app5',
+    components: {
+        'async-component2': function () {
+            return promise;
+        },
+        'async-component3': function () {
+            return{
+                component:promise,
+                loading:{
+                    template: '<div>正在加载中……</div>'
+                },
+                error:app5Rej,
+                delay:200,
+                timeout:3000
+            }
+        }
+    }
+});
 
 
 
