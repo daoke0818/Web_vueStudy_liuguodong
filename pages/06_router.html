@@ -38,29 +38,97 @@
         <router-view></router-view>
         <ul class="mySummary">
             <li>在 Vue 实例内部，你可以通过 <code>$router</code> 访问路由实例</li>
-            <li><code>router.push</code> 方法可以让触发路由动作，导航到不同的 URL</li>
+            <li><code>router.push</code> 方法可以触发路由动作，导航到不同的 URL</li>
             <li>除了<code>path</code>，还可以用<code>name</code>来指定路由的跳转目标</li>
             <li>动态路由在Vue实例初始化时要配置 <code>mode: 'history' </code>，但这样可能会引起地址栏路径的变化，请观察</li>
             <li>动态路由中传入的参数被对应的带冒号的属性接收后，存放在<code>$router.params</code>中，如果有查询参数（即问号后面带的参数）则放在<code>$router.query</code>中。
-                查询参数也可以在push时通过<code>query</code>属性来传入</li>
+                查询参数也可以在push时通过<code>query</code>属性来传入
+            </li>
         </ul>
     </section>
     <section id="app3">
         <h3>嵌套路由</h3>
         <p>
-            这是父组件的内容。。。
-            <router-view></router-view>
+            <router-view class="bg-success p-3"></router-view>
         </p>
+        <ul class="mySummary">
+            <li>如果渲染到路由出口的组件内又有路由出口，则在配置路由时，外层的path同级添加一个children属性，结构和外层这个数组一样。
+                在外层组件里可以通过&lt;router-link&gt;来指向内部要渲染的组件
+            </li>
+        </ul>
+    </section>
+    <section id="app4">
+        <h3>同级多路由</h3>
+        <div style="background: #80bdff;padding: .125rem;">
+            <router-view name="topBar" style="background: #005cbf;color: #fff;"></router-view>
+            <div class="d-flex" style="height: 5rem;">
+                <router-view name="sideBar" style="width: 25%;background: rgba(0,0,0,.13);"></router-view>
+                <router-view></router-view>
+            </div>
+        </div>
+        <ul class="mySummary">
+            <li>把每个路由出口都加上name属性，然后以这些name为key写入路由的components对象中，值为要渲染的组件</li>
+            <li>如果有没写name属性的路由出口，则会对应到components的default属性中</li>
+            <li>刷新页面时一定要注意，如果测试过上面的demo，页面路径地址可能发生变化(#后面的值)，而看不到预期效果。</li>
+        </ul>
+    </section>
+    <section id="app5">
+        <h3>导航守卫</h3>
+        <router-link to="/user/">用户</router-link>
+        <router-link to="/user/Beethoven">贝多芬</router-link>
+        <router-link to="/user/Mozart">莫扎特</router-link>
+        <router-view></router-view>
+        <ul class="mySummary">
+            <li>当我们通过路由来控制页面跳转时，可以用导航守卫来监听这些跳转，并做出通过或者取消的动作。
+            <li>导航守卫有3种：
+                <ol>
+                    <li>全局守卫，定义在router上的方法，有3种：
+                        <ul>
+                            <li><code>beforeEach</code>，进入路由时，最先被调用</li>
+                            <li><code>beforeResolve</code>，路由被确认前，左右组件内守卫和异步路由组件被解析之后调用</li>
+                            <li><code>afterEach</code>，导航执行完成之后被调用，注意这里没有next参数</li>
+                        </ul>
+                    </li>
+                    <li>路由独享守卫，定义在routes里面跟path平级的路由对象上，只有一个方法<code>beforeEnter</code>，在beforeEach之后调用</li>
+                    <li>组件内守卫，定义在组件内和template平级，有3种：
+                        <ul>
+                            <li><code>beforeRouteEnter</code>，进入路由时，在beforeEnter之后调用，此时实例还未创建</li>
+                            <li><code>beforeRouteUpdate</code>，当前路由改变，但<strong>组件被复用</strong>的时候调用。比如从/user/Beethoven跳转到/user/Mozart，
+                                而路由中的路径定义是<code>path: '/user/:name'</code>同一个组件，则这两个路由之间切换时就会复用这个组件。
+                                如果跳转到其他路由再跳回来则不会复用组件。</li>
+                            <li><code>beforeRouteLeave</code>，离开路由时调用，通常是用户修改信息未保存时禁止跳转，可用next(false) 来取消</li>
+                        </ul>
+                    </li>
+                </ol>
+            </li>
+            <li>除了afterEach没有next，其他每个守卫都接收3个参数：
+            <ul>
+                <li><code>to</code>: Route: 即将要进入的目标 路由对象</li>
+                <li><code>from</code>: Route: 当前导航正要离开的路由</li>
+                <li><code>next</code>: Function: <strong>一定</strong>要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
+                <ul>
+                    <li><code>next()</code>: 进行管道中的下一个钩子。如果全部钩子执行完了，则导航的状态就是 confirmed (确认的)。
+
+                    <li><code>next(false)</code>: 中断当前的导航。如果浏览器的 URL 改变了 (可能是用户手动或者浏览器后退按钮)，那么 URL 地址会重置到 from 路由对应的地址。
+
+                    <li><code>next('/')</code> 或者 <code>next({ path: '/' })</code>: 跳转到一个不同的地址。当前的导航被中断，然后进行一个新的导航。你可以向 next 传递任意位置对象，且允许设置诸如 replace: true、name: 'home' 之类的选项以及任何用在 router-link 的 to prop 或 router.push 中的选项。
+
+                    <li><code>next(error)</code>: (2.4.0+) 如果传入 next 的参数是一个 Error 实例，则导航会被终止且该错误会被传递给 router.onError() 注册过的回调。
+                </ul>
+                </li>
+            </ul>
+            </li>
+        </ul>
     </section>
 </div>
 <script type="text/template-x" id="app3-sup">
-    <div class="bg-warning">
-        这是子组件内容
+    <div>
+        这是外层路由
         <p>
             <router-link @click.prevent to="/sub1">sub1</router-link>
             <router-link @click.prevent to="/sub2">sub2</router-link>
         </p>
-        <router-view></router-view>
+        <router-view class="bg-warning"></router-view>
     </div>
 </script>
 
