@@ -6,7 +6,7 @@
 	<meta name="renderer" content="webkit">
 	<title>第九篇 网络请求——axios</title>
 	<link rel="stylesheet" href="../assets/css/bootstrap.css">
-	<link rel="stylesheet" href="../assets/css/animate-3.7.0.css">
+<!--	<link rel="stylesheet" href="../assets/css/animate-3.7.0.css">-->
 	<link rel="stylesheet" href="../css/common.css">
 </head>
 <body>
@@ -17,7 +17,12 @@
 	<section id="app">
 		<h3>使用axios进行标准的ajax请求</h3>
 		<div>
-			<pre>{{data}}</pre>
+			<ol class="list-group mb-3">用户：
+				<li v-for="user in users" class="list-group-item">{{user.name}} {{user.sex}}</li>
+			</ol>
+			<ol class="list-group">贝多芬的朋友：
+				<li v-for="friend in friends" class="list-group-item">{{friend.name}} {{friend.sex}}</li>
+			</ol>
 		</div>
 		<ul class="mySummary">
 			<li>这就是使用 axios 进行的一个标准的 ajax 请求方式。当使用 axios 进行一个 ajax 请求时，无论是 get、
@@ -35,12 +40,24 @@
 	let app = new Vue({
 		el:'#app',
 		data:{
-			data:''
+			data:'',
+			users: [],
+			friends:[]
 		},
 		mounted(){
 			let p = axios.get("../assets/data/users.json");
 			p.then(res =>{
-				this.data = res;
+				this.users = res.data.users;
+				let axiosTemp = {};
+				this.users.forEach((user,index)=>{
+					if(user.name_en === 'Beethoven'){
+						axiosTemp = axios.get('../assets/data/'+user.name_en+'.json')
+					}
+				});
+				return axiosTemp;
+			}).then(res=>{
+				console.log(res.data)
+				this.friends = res.data
 			}).catch(function (err) {
 				console.log(err)
 			})

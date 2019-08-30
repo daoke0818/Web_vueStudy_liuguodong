@@ -1,14 +1,15 @@
 {"users":[
   {
-    "id": "001",
+    "id": "0011",
     "name":"爱因斯坦",
     "sex": "boy"
   },{
-    "id": "002",
+    "id": "0022",
     "name":"贝多芬",
+    "name_en":"Beethoven",
     "sex": "boy"
   },{
-    "id": "003",
+    "id": "0033",
     "name":"居里夫人",
     "sex": "girl"
   }
