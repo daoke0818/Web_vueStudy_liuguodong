@@ -18,20 +18,25 @@ let app3 = new Vue({
     methods: {
 
         beforeEnter(el) {
+            // alert('beforeEnter');
             console.log('beforeEnter');
             el.style.transformOrigin = 'left';
             el.style.opacity = 0;
             el.style.transform='rotateZ(0)'
         },
         enter(el, done) {
+            // alert('enter');
             console.log('enter');
             Velocity(el, {opacity: 1, fontSize: '1.5rem',}, {duration: '600'});
+            // duration默认400ms
             Velocity(el, {fontSize: '1rem'}, {complete: done})
         },
         afterEnter(el) {
+            // alert('afterEnter');
             console.log('afterEnter');
         },
         enterCancelled(el) {
+            alert('enterCancelled');
             console.log('enterCancelled')
         },
         beforeLeave(el) {
@@ -40,6 +45,7 @@ let app3 = new Vue({
         leave(el, done) {
             console.log('leave');
             Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 });
+            // loop表示动画从上个状态过渡到这个状态再过渡回去，一个来回算一次，值为2就是两个来回
             Velocity(el, { rotateZ: '100deg' }, { loop: 2 });
             Velocity(el, {
                 rotateZ: '45deg',
@@ -53,6 +59,7 @@ let app3 = new Vue({
 
         },
         leaveCancelled(el) {
+            alert('leaveCancelled');
             console.log('leaveCancelled')
         }
     }
@@ -118,12 +125,17 @@ let app6 = new Vue({
 let app7 = new Vue({
     el: '#app7',
     mounted(){
-        anime({
-            targets:['line','circle','polygon','polyline','path','rect'],
-            strokeDashoffset:[anime.setDashoffset,0],
-            easing: 'easeInOutSine', // 动画运动速度曲线
-            duration:1500
-        })
+        this.repaint();
+    },
+    methods:{
+        repaint(){
+            anime({
+                targets:['line','circle','polygon','polyline','path','rect'],
+                strokeDashoffset:[anime.setDashoffset,0],
+                easing: 'easeInOutSine', // 动画运动速度曲线
+                duration:1500
+            })
+        }
     }
 });
 

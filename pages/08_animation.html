@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="../assets/css/animate-3.7.0.css">
 	<link rel="stylesheet" href="../css/common.css">
 	<style>
-		p {
+		section p {
 			width: 350px;
 			height: 150px;
 			line-height: 150px;
@@ -29,7 +29,7 @@
 		
 		.anim-1-leave-to {
 			opacity: 0;
-			transform: translate(100px);
+			transform: translate(-100px);
 		}
 		
 		.anim-1-leave-active {
@@ -117,7 +117,7 @@
 				<ul>
 					<li>用<code>&lt;transition&gt;</code>标签包住要实现动画的元素</li>
 					<li>提供<code>name</code>属性</li>
-					<li>定义css的各种动画状态，class名称是<code>name</code>拼接上<code>-enter</code>，<code>-enter-active</code>，<code>-leave-to</code>，<code>-leave-active</code>，<code>-enter-to</code>，<code>-leave</code>，其中后两者可选。
+					<li>定义css的各种动画状态，class名称是<code>name</code>拼接上<code>-enter</code>，<code>-enter-to</code>，<code>-enter-active</code>，<code>-leave</code>，<code>-leave-to</code>，<code>-leave-active</code>，其中后两者可选。
 					</li>
 				</ul>
 			</li>
@@ -149,7 +149,7 @@
 			<li>demo中使用了Velocity动画库，第一个参数是元素，第二个参数是对象表示动画最终状态，第三个参数也是对象为附加选项</li>
 			<li><code>before-enter</code>：进入前，<code>enter</code>：进入中，<code>after-enter</code>：进入后，<code>enter-cancelled</code>：进入动画被取消，<br><code>before-leave</code>：离开前，<code>leave</code>：离开中，<code>after-leave</code>：离开后，<code>leave-cancelled</code>：离开动画被取消，<br>——这是8种钩子函数
 			</li>
-			<li>动画未结束时再次触发动画，就会调用<code>-cancelled</code>这个钩子。</li>
+			<li>动画未结束时再次触发动画，就会调用<code>-cancelled</code>这个钩子。如果动画进入过程中被取消，就等进入动画完成后再自动触发离开动画；而离开过程中被取消，则会把离开的最后设定状态再叠加上进入的动画一起表现出来。</li>
 			<li class="text-danger">发现当enter中的一些css属性(这里是opacity)如果和之前动画结束时的一样，则不会触发动画，而实际上我可能在before-enter里面已经改变了状态，却被忽略，原因未知。</li>
 			<li>这个动画中离开的过程在最新版velocity-2.0.5中无旋转动画，使用老版本1.2.3可以，但要放在head部分引入</li>
 		</ul>
@@ -165,6 +165,8 @@
 			<span class="d-inline-block list-item border m-2 p-2" v-for="item in items" :key="item">{{item}}</span>
 		</transition-group>
 		<ul class="mySummary">
+			<li>本例指定name，使用过渡类名的方法添加动画。</li>
+			<li><code> tag="div"</code> 表示transition-group将会被渲染成p标签</li>
 			<li>每个条目中必须给特性key绑定不同值。</li>
 		</ul>
 	</section>
@@ -193,7 +195,7 @@
 			<p v-show="show">动画三</p>
 		</transition>
 		<ul class="mySummary">
-			<li>引入animate.css后，用过渡类名指定使用nimate.css中哪些动画效果</li>
+			<li>引入animate.css后，用自定义过渡类名指定使用nimate.css中哪些动画效果</li>
 		</ul>
 	</section>
 	<section id="app6" style="overflow: hidden">
@@ -210,6 +212,9 @@
 	</section>
 	<section id="app7">
 		<h3>AnimeJs的SVG动画</h3>
+		<div class="m-3">
+			<button @click="repaint">重绘动画</button>
+		</div>
 		<svg viewBox="0 0 600 400">
 			<g fill="none" fill-rule="evenodd">
 				<line class="line-1" stroke="#F96F82" x1="51.5" x2="149.5" y1="51.5" y2="149.5" stroke-linecap="square"/>
