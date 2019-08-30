@@ -115,22 +115,26 @@ const app4 = new Vue({
 const app5_userName = {
     template: '<div>姓名：<strong>{{$route.params.name}}</strong></div>',
     beforeRouteEnter(to, from, next) {
-        console.log('~~~ beforeRouteEnter');
+        console.log('~~~~ beforeRouteEnter');
         next();
     },
     beforeRouteUpdate(to,from,next){
-        console.log('~~~ beforeRouteUpdate 组件复用更新');
+        console.log('~~~~ beforeRouteUpdate 组件复用更新');
         next();
     },
     beforeRouteLeave(to, from, next) {
-        console.log('~~~ beforeRouteLeave');
+        console.log('~~~~ beforeRouteLeave 离开用户详情');
         next();
     },
 };
 const app5Routes = [{
     path: '/user',
     component: {
-        template: '<div>用户列表页</div>'
+        template: '<div>用户列表页</div>',
+        beforeRouteLeave(to, from, next) {
+            console.log('~~~~ beforeRouteLeave 离开了用户列表页');
+            next();
+        },
     }
 }, {
     path: '/user/:name',

@@ -95,29 +95,52 @@
                             <li><code>beforeRouteEnter</code>，进入路由时，在beforeEnter之后调用，此时实例还未创建</li>
                             <li><code>beforeRouteUpdate</code>，当前路由改变，但<strong>组件被复用</strong>的时候调用。比如从/user/Beethoven跳转到/user/Mozart，
                                 而路由中的路径定义是<code>path: '/user/:name'</code>同一个组件，则这两个路由之间切换时就会复用这个组件。
-                                如果跳转到其他路由再跳回来则不会复用组件。</li>
+                                如果跳转到其他路由再跳回来则不会复用组件。
+                            </li>
                             <li><code>beforeRouteLeave</code>，离开路由时调用，通常是用户修改信息未保存时禁止跳转，可用next(false) 来取消</li>
                         </ul>
                     </li>
                 </ol>
             </li>
             <li>除了afterEach没有next，其他每个守卫都接收3个参数：
-            <ul>
-                <li><code>to</code>: Route: 即将要进入的目标 路由对象</li>
-                <li><code>from</code>: Route: 当前导航正要离开的路由</li>
-                <li><code>next</code>: Function: <strong>一定</strong>要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
                 <ul>
-                    <li><code>next()</code>: 进行管道中的下一个钩子。如果全部钩子执行完了，则导航的状态就是 confirmed (确认的)。
+                    <li><code>to</code>: Route: 即将要进入的目标 路由对象</li>
+                    <li><code>from</code>: Route: 当前导航正要离开的路由</li>
+                    <li><code>next</code>: Function: <strong>一定</strong>要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
+                        <ul>
+                            <li><code>next()</code>: 进行管道中的下一个钩子。如果全部钩子执行完了，则导航的状态就是 confirmed (确认的)。
 
-                    <li><code>next(false)</code>: 中断当前的导航。如果浏览器的 URL 改变了 (可能是用户手动或者浏览器后退按钮)，那么 URL 地址会重置到 from 路由对应的地址。
+                            <li><code>next(false)</code>: 中断当前的导航。如果浏览器的 URL 改变了 (可能是用户手动或者浏览器后退按钮)，那么 URL 地址会重置到 from
+                                路由对应的地址。
 
-                    <li><code>next('/')</code> 或者 <code>next({ path: '/' })</code>: 跳转到一个不同的地址。当前的导航被中断，然后进行一个新的导航。你可以向 next 传递任意位置对象，且允许设置诸如 replace: true、name: 'home' 之类的选项以及任何用在 router-link 的 to prop 或 router.push 中的选项。
+                            <li><code>next('/')</code> 或者 <code>next({ path: '/' })</code>:
+                                跳转到一个不同的地址。当前的导航被中断，然后进行一个新的导航。你可以向 next 传递任意位置对象，且允许设置诸如 replace: true、name: 'home'
+                                之类的选项以及任何用在 router-link 的 to prop 或 router.push 中的选项。
 
-                    <li><code>next(error)</code>: (2.4.0+) 如果传入 next 的参数是一个 Error 实例，则导航会被终止且该错误会被传递给 router.onError() 注册过的回调。
+                            <li><code>next(error)</code>: (2.4.0+) 如果传入 next 的参数是一个 Error 实例，则导航会被终止且该错误会被传递给
+                                router.onError() 注册过的回调。
+                        </ul>
+                    </li>
                 </ul>
-                </li>
-            </ul>
             </li>
+            <li>完整的导航解析流程：
+                <ul>
+                    <li>导航被触发。</li>
+                    <li>在失活的组件里调用离开守卫beforeRouteLeave。</li>
+                    <li>调用全局的 beforeEach 守卫。</li>
+                    <li>在<strong>重用的组件</strong>里调用 beforeRouteUpdate 守卫 (2.2+)。</li>
+                    <li>在路由配置里调用 beforeEnter。</li>
+                    <li>解析异步路由组件。</li>
+                    <li>在被激活的组件里调用 beforeRouteEnter。</li>
+                    <li>调用全局的 beforeResolve 守卫 (2.5+)。</li>
+                    <li>导航被确认。</li>
+                    <li>调用全局的 afterEach 钩子。</li>
+                    <li>触发 DOM 更新。</li>
+                    <li>用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。</li>
+                </ul>
+            </li>
+            <li>实际的触发顺序请看控制台的打印</li>
+            <li class="text-danger">被复用的组件user/:name中的beforeRouteLeave一直不能被触发，直到我在user组件里也写了同样的守卫，这时互相切换都能触发，然后关了user的离开守卫，user/:name中的beforeRouteLeave也能正常触发，就像被其他组件激活一下才能正常使用一样。</li>
         </ul>
     </section>
 </div>
