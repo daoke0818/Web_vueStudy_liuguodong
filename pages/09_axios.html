@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-	<meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="renderer" content="webkit">
-	<title>第九篇 网络请求——axios</title>
-	<link rel="stylesheet" href="../assets/css/bootstrap.css">
-<!--	<link rel="stylesheet" href="../assets/css/animate-3.7.0.css">-->
-	<link rel="stylesheet" href="../css/common.css">
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>第九篇 网络请求——axios</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
+    <!--	<link rel="stylesheet" href="../assets/css/animate-3.7.0.css">-->
+    <link rel="stylesheet" href="../css/common.css">
 </head>
 <body>
 
 <div class="container">
-	<h1>第九篇 网络请求——axios</h1>
-	
-	<section id="app">
-		<h3>使用axios进行标准的ajax请求</h3>
-		<div>
-			<ol class="list-group mb-3">用户：
-				<li v-for="user in users" class="list-group-item">{{user.name}} {{user.sex}}</li>
-			</ol>
-			<ol class="list-group">贝多芬的朋友：
-				<li v-for="friend in friends" class="list-group-item">{{friend.name}} {{friend.sex}}</li>
-			</ol>
-		</div>
-		<ul class="mySummary">
-			<li>这就是使用 axios 进行的一个标准的 ajax 请求方式。当使用 axios 进行一个 ajax 请求时，无论是 get、
-				post、put 等，它都会返回一个 Promise 对象，我们通过这个 Promise 对象进行 .then 的链式调用来
-				执行数据请求之后的执行逻辑</li>
-		</ul>
-	</section>
+    <h1>第九篇 网络请求——axios</h1>
+
+    <section id="app">
+        <h3>使用axios进行标准的ajax请求</h3>
+        <div>
+            <h4>用户</h4>
+            <ol class="list-group mb-3">
+                <li v-for="user in users" class="list-group-item">{{user.name}} {{user.sex}}</li>
+            </ol>
+            <h4>贝多芬的朋友</h4>
+            <ol class="list-group">
+                <li v-for="friend in friends" class="list-group-item">{{friend.name}} {{friend.sex}}</li>
+            </ol>
+        </div>
+        <ul class="mySummary">
+            <li>当使用 axios 进行一个 ajax 请求时，无论是 get、post、put 等，它都会返回一个 Promise 对象，我们通过这个 Promise 对象进行 .then 的链式调用来执行数据请求之后的逻辑
+            </li>
+            <li>可以像jQuery一样来配置axios的请求(更多配置信息请点击<a target="_blank" href="https://www.kancloud.cn/yunye/axios/234845">https://www.kancloud.cn/yunye/axios/234845</a>)：
+                <pre>
+	axios({
+          method: 'post', 
+  	  url: '/users/friends', 
+  	  data: {} 
+	}).then((res) => { 
+	  this.friends = res.data 
+	});
+			</pre>
+            </li>
+        </ul>
+    </section>
 </div>
 
 <script src="../assets/js/vue-2.5.17.js"></script>
@@ -37,32 +49,32 @@
 <script src="../assets/js/jquery-3.3.1.js"></script>
 <script src='../js/common.js'></script>
 <script>
-	let app = new Vue({
-		el:'#app',
-		data:{
-			data:'',
-			users: [],
-			friends:[]
-		},
-		mounted(){
-			let p = axios.get("../assets/data/users.json");
-			p.then(res =>{
-				this.users = res.data.users;
-				let axiosTemp = {};
-				this.users.forEach((user,index)=>{
-					if(user.name_en === 'Beethoven'){
-						axiosTemp = axios.get('../assets/data/'+user.name_en+'.json')
-					}
-				});
-				return axiosTemp;
-			}).then(res=>{
-				console.log(res.data)
-				this.friends = res.data
-			}).catch(function (err) {
-				console.log(err)
-			})
-		}
-	})
+    let app = new Vue({
+        el: '#app',
+        data: {
+            data: '',
+            users: [],
+            friends: []
+        },
+        mounted() {
+            let p = axios.get("../assets/data/users.json");
+            p.then(res => {
+                this.users = res.data.users;
+                let axiosTemp = {};
+                this.users.forEach((user, index) => {
+                    if (user.name_en === 'Beethoven') {
+                        axiosTemp = axios.get('../assets/data/' + user.name_en + '.json')
+                    }
+                });
+                return axiosTemp;
+            }).then(res => {
+                console.log(res.data)
+                this.friends = res.data
+            }).catch(function (err) {
+                console.log(err)
+            })
+        }
+    })
 
 </script>
 </body>
