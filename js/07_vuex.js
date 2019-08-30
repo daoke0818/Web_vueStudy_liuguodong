@@ -96,11 +96,12 @@ const app4Store = new Vuex.Store({
     },
     mutations: {
         increment: function (state, num) {
-            console.log('~~mutation', state.count)
-            state.count++
+            console.log('~~mutation', state.count);
+            state.count+=num
         }
     },
     actions: {
+        // context和app4Store具有相同的方法和属性，但不等同于app4Store本身
         increment: function (context, num) {
             setTimeout(function () {
                 context.commit('increment', num)

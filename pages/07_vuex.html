@@ -47,7 +47,10 @@
                 <ul>
                     <li><code>state</code>：唯一的数据源</li>
                     <li><code>mutations</code>：修改数据的方法，第一个参数默认是state</li>
-                    <li><code>actions</code>：函数接受一个与store实例有相同方法和属性的context对象，可以通过<code>context.commit</code>提交一个mutation，实现异步需求，但context并不是store实例本身</li>
+                    <li><code>actions</code>：函数接收一个与store实例有相同方法和属性的context对象，可以通过<code>context.commit</code>提交一个mutation(也可以通过对象方式提交，则mutation就会收到一个对象)，可实现异步需求，但context并不是store实例本身
+                    </li>
+                    <li>在methods里，可以通过 <code>this.$store.dispatch('increment', 1);</code>来注册一个触发action的方法(参数也可以是对象)，当被调用时就触发相应action的动作，继而提交mutation，最终改变state。
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -57,7 +60,8 @@
         <app5-com-1></app5-com-1>
         <app5-com-2></app5-com-2>
         <ul class="mySummary">
-            <li></li>
+            <li>默认情况下，getter,mutation,action是注册的全局的，这样使得多个模块对同一个这些属性能更快响应，但是如果要细分组件，局部注册，可以通过 <code>namespaced: true</code> 开启模块的命名空间。</li>
+            <li>注意this.$store.state.a.count的 <code>$store.state.a</code> 是全局store下a模块的state数据对象，可以看做是state暴露到全局，然后通过模块名区分内部属性</li>
             <li>Vuex中的modules和getters属性：
                 <ul>
                     <li><code>modules</code>：如果有多个store的话可以分模块管理，每个模块有这些独立的参数</li>
@@ -85,9 +89,9 @@
     </div>
 </script>
 <script type="text/x-template" id="app2-com-2">
-<div>
-    <p>count: {{count}}</p>
-</div>
+    <div>
+        <p>count: {{count}}</p>
+    </div>
 </script>
 <script type="text/x-template" id="app3-com-1">
     <div>
@@ -111,10 +115,11 @@
     </div>
 </script>
 <script type="text/x-template" id="app5-com-2">
-<div>
-    <p>count:{{this.$store.state.a.count}}</p>
-    <p>count:{{this.$store.getters.doubleCount}}</p>
-</div>
+    <div>
+        <p>this.$store.state.a.count: {{this.$store.state.a.count}}</p>
+        <p>this.$store.getters.count: {{this.$store.getters.count}}</p>
+        <p>this.$store.getters.doubleCount: {{this.$store.getters.doubleCount}}</p>
+    </div>
 </script>
 
 <script src="../assets/js/vue-2.5.17.js"></script>

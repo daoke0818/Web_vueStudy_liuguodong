@@ -140,7 +140,7 @@
                 </ul>
             </li>
             <li>实际的触发顺序请看控制台的打印</li>
-            <li class="text-danger">被复用的组件user/:name中的beforeRouteLeave一直不能被触发，直到我在user组件里也写了同样的守卫，这时互相切换都能触发，然后关了user的离开守卫，user/:name中的beforeRouteLeave也能正常触发，就像被其他组件激活一下才能正常使用一样。</li>
+            <li class="text-danger">发现个问题：被复用的组件user/:name中的beforeRouteLeave一直不能被触发，直到我在user组件里也写了同样的守卫，这时互相切换都能触发，然后关了user的离开守卫，user/:name中的beforeRouteLeave也能正常触发，就像被其他组件激活一下才能正常使用一样，莫名其妙！</li>
         </ul>
     </section>
 </div>
