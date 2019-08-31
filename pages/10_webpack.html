@@ -14,10 +14,12 @@
     <h1>第九篇 webpack</h1>
 
     <section id="app">
-        <h3>首要条件——模块化写法</h3>
+        <h3>打包</h3>
         <app-com-1></app-com-1>
         <ul class="mySummary">
-            <li>请观察控制台，采用模块化写法，在a中调用b</li>
+            <li>静态资源打包器，把多个文件打包成一个文件，去除多余的文件和代码</li>
+            <li>每个js文件必须采用模块化写法，请观察控制台，在a中调用b</li>
+            <li>webpack会在内部从entry入口根据依赖关系递归的构建一个依赖图，这个依赖图包含了应用程序所有需要的每个模块。</li>
         </ul>
     </section>
     <section id="app2">
@@ -35,11 +37,39 @@
         </ul>
     </section>
     <section id="app3">
-        <h3>webpack配置中的loader</h3>
-        <p class="app3Test"></p>
+        <h3>webpack核心概念</h3>
+        <h4>入口(entry)</h4>
+        <ul class="mySummary">
+            <li>从哪个文件开始构建依赖图</li>
+            <li>依赖图可以有1个或多个</li>
+        </ul>
+        <h4>输出(output)</h4>
+        <ul class="mySummary">
+            <li>指定打包后文件的输出位置，默认是<code>./dist</code></li>
+            <li>可以分别指定路径和名称
+                <pre>
+    output: { 
+        filename: '[name][hash:5].js', // 入口文件的定义名称和打包哈希的前5位
+        path: __dirname + '/dist' // 当前目录下的/dist目录
+    }</pre>
+            </li>
+        </ul>
+        <h4>loader</h4>
         <ul class="mySummary">
             <li><code>css‐loader</code>解析css文件，<code>style-loader</code>将解析后的css样式加入到页面</li>
-            <li>需要关注 'style‐loader' 和 'css‐loader' 的引入顺序，因为 webpack 对 loader 的处理是自下而上的</li>
+            <li>上述两个loader的顺序是先 'style‐loader' 后 'css‐loader'，因为 webpack 对 loader 的处理是自下而上的</li>
+            <li>loader的两个属性test和use，如<code> {test: /\.txt$/, use: 'raw‐loader' }</code>
+                表示在webpack打包前将解析得到后缀为.txt的模块全部用raw-loader处理一下</li>
+        </ul>
+        <h4>插件(plugins)</h4>
+        <ul class="mySummary">
+            <li>实现一些loader无法完成的事情</li>
+            <li>如果打包时出现 <code>Error: Cannot find module 'webpack/lib/node/NodeTemplatePlugin'</code>
+                错误，那么需要先执行<code> npm install webpack</code>安装Webpack到本地</li>
+            </ul>
+        <h4>模式(mode，4.0新增)</h4>
+        <ul class="mySummary">
+            <li>指定一个打包模式，目前支持的模式有 development（开发模式）和 produc耂on（生产模式）</li>
         </ul>
     </section>
 
