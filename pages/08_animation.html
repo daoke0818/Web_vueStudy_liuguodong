@@ -4,7 +4,7 @@
 	<meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="renderer" content="webkit">
-	<title>第八篇 动画</title>
+	<title>第九篇 动画</title>
 	<link rel="stylesheet" href="../assets/css/bootstrap.css">
 	<link rel="stylesheet" href="../assets/css/animate-3.7.0.css">
 	<link rel="stylesheet" href="../css/common.css">
@@ -17,33 +17,33 @@
 			background-color: deepskyblue;
 			margin: 16px auto;
 		}
-		
+
 		.anim-1-enter {
 			opacity: 0;
 			transform: translate(100px);
 		}
-		
+
 		.anim-1-enter-active {
 			transition: all 1s ease;
 		}
-		
+
 		.anim-1-leave-to {
 			opacity: 0;
 			transform: translate(-100px);
 		}
-		
+
 		.anim-1-leave-active {
 			transition: all 1s ease;
 		}
-		
+
 		.anim-2-enter-active {
 			animation: bounce-in 1s ease;
 		}
-		
+
 		.anim-2-leave-active {
 			animation: bounce-in 1s ease reverse;
 		}
-		
+
 		@keyframes bounce-in {
 			0% {
 				transform: scale(0);
@@ -55,25 +55,25 @@
 				transform: scale(1);
 			}
 		}
-		
+
 		.app2-anim-enter-myClass {
 			opacity: 0;
 			transform: translate(-500px);
 		}
-		
+
 		.app2-anim-enter-active-myClass {
 			transition: all .5s;
 		}
-		
+
 		.app2-anim-enter-to-myClass {
 			transform: translate(100px);
 		}
-		
+
 		.app2-anim-leave-to-myClass {
 			opacity: 0;
 			transform: translate(500px);
 		}
-		
+
 		.app2-anim-leave-active-myClass {
 			transition: all linear .3s;
 		}
@@ -88,15 +88,15 @@
 		}
 	</style>
 	<!--<script src="../assets/js/velocity-2.0.5.min.js"></script>-->
-	
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
 
 </head>
 <body>
 
 <div class="container">
-	<h1>第八篇 动画</h1>
-	
+	<h1>第九篇 动画</h1>
+
 	<section id="app">
 		<h3>使用过渡类名实现的过渡和动画</h3>
 		<div>
